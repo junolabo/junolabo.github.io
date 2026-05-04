@@ -1,6 +1,6 @@
 # junolabo.github.io
 
-GitHub Pages portfolio starter.
+Korean portfolio page for Junho Kim.
 
 ## Local preview
 
@@ -10,4 +10,4 @@ open index.html
 
 ## Deploy
 
-Push this directory to the `junolabo.github.io` public repository.
+Push `main` to `origin`. GitHub Pages serves this repository as `https://junolabo.github.io`.

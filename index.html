@@ -3,12 +3,235 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>junolabo</title>
+    <title>김준호 | Physical AI / Robotics Engineer</title>
+    <meta
+      name="description"
+      content="김준호, 실환경 로봇 시스템에서 perception, orchestration, robot learning, edge deployment를 연결하는 Physical AI / Robotics Engineer."
+    />
+    <meta property="og:title" content="김준호 | Physical AI / Robotics Engineer" />
+    <meta
+      property="og:description"
+      content="실환경 로봇 시스템에서 perception, orchestration, robot learning, edge deployment를 연결합니다."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="assets/profile_image_robot.jpeg" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <main>
-      <h1>junolabo.github.io</h1>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="김준호 포트폴리오 홈">junolabo</a>
+      <nav class="nav" aria-label="주요 섹션">
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero section">
+        <div class="hero-copy">
+          <p class="eyebrow">Physical AI / Robotics Engineer</p>
+          <h1>실환경 로봇 시스템을 운영 가능한 지능으로 연결합니다.</h1>
+          <p class="hero-description">
+            Perception, multimodal orchestration, robot learning, edge deployment를
+            하나의 흐름으로 설계하고 검증해 온 AI 시스템 엔지니어 김준호입니다.
+          </p>
+          <div class="hero-actions" aria-label="연락처 링크">
+            <a class="button primary" href="mailto:snowpoet95@gmail.com">Email</a>
+            <a class="button secondary" href="https://github.com/junolabo" target="_blank" rel="noreferrer">GitHub</a>
+          </div>
+        </div>
+        <figure class="hero-visual">
+          <img src="assets/profile_image_robot.jpeg" alt="김준호 프로필 이미지" />
+          <figcaption>
+            <span>Junho Kim</span>
+            <strong>ROS2 · VLM · RL/IL · Edge AI</strong>
+          </figcaption>
+        </figure>
+      </section>
+
+      <section class="metrics section" aria-label="핵심 성과">
+        <article>
+          <strong>85%</strong>
+          <span>예외 상황 자동 복구율</span>
+        </article>
+        <article>
+          <strong>40%</strong>
+          <span>장애 복구 시간 단축</span>
+        </article>
+        <article>
+          <strong>15% → 2%</strong>
+          <span>실환경 오검출률 개선</span>
+        </article>
+        <article>
+          <strong>50ms</strong>
+          <span>상태 판정 지연 시간</span>
+        </article>
+        <article>
+          <strong>92%</strong>
+          <span>실기기 드립 동작 성공률</span>
+        </article>
+      </section>
+
+      <section class="section split-section" aria-labelledby="positioning-title">
+        <div class="section-heading">
+          <p class="eyebrow">Positioning</p>
+          <h2 id="positioning-title">로봇 지능을 실제 운영 조건에 맞게 설계합니다.</h2>
+        </div>
+        <div class="position-grid">
+          <article class="card">
+            <h3>Physical AI</h3>
+            <p>
+              ROS2 기반 시스템 통합, 리더-팔로워 원격 조종, Isaac Sim 기반 RL/IL,
+              Sim-to-Real 검증을 실제 로봇 동작 평가와 연결합니다.
+            </p>
+          </article>
+          <article class="card">
+            <h3>AI System</h3>
+            <p>
+              이기종 비동기 입력을 공통 상태 표현으로 정합하고, Safety Supervisor,
+              Constraint Gate, fallback 구조로 운영 리스크를 제어합니다.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Vision AI / VLM</h3>
+            <p>
+              Depth estimation, 3D occupancy, anomaly detection, auto-labeling,
+              VLM fine-tuning을 로봇 perception 파이프라인으로 묶습니다.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="projects" aria-labelledby="projects-title">
+        <div class="section-heading compact">
+          <p class="eyebrow">Featured Projects</p>
+          <h2 id="projects-title">대표 프로젝트</h2>
+        </div>
+        <div class="project-list">
+          <article class="project-card">
+            <div class="project-meta">
+              <span>2025.08 - Present</span>
+              <span>PM / Tech Lead</span>
+            </div>
+            <h3>멀티모달 로봇 인텔리전스 오케스트레이션</h3>
+            <p>
+              RealSense, gripper RGB, 주문, 기기, 로봇 상태를 ROS2 State Builder로
+              통합하고 Heuristic, VLA, RL/IL executor를 분리한 안전 실행 구조를 설계했습니다.
+            </p>
+            <ul>
+              <li>Qwen 3.0 VL fine-tuning, vLLM + AWQ-4bit, Jetson Orin NX 운영 환경 적용</li>
+              <li>Safety Supervisor / Constraint Gate / replay regression testing 기반 검증 루프 구축</li>
+              <li>예외 자동 복구율 85%, 장애 복구 시간 40% 단축</li>
+            </ul>
+          </article>
+
+          <article class="project-card">
+            <div class="project-meta">
+              <span>2024.04 - 2025.11</span>
+              <span>Lead Developer</span>
+            </div>
+            <h3>로봇 카페 Perception 통합</h3>
+            <p>
+              하이앵글 및 BEV 멀티뷰 수집, SAM3 / Depth Anything 기반 auto-labeling,
+              24-slot occupancy 판단 로직을 실매장 조건에 맞게 통합했습니다.
+            </p>
+            <ul>
+              <li>MDE relative depth와 RealSense absolute scale 융합 보정 파이프라인 설계</li>
+              <li>HDBSCAN + 3D Bounding Box + temporal smoothing으로 반사와 가림 오검출 저감</li>
+              <li>오검출률 15%에서 2%로 개선, 제조 완료 및 고객 픽업 판정 50ms 달성</li>
+            </ul>
+          </article>
+
+          <article class="project-card">
+            <div class="project-meta">
+              <span>2025.04 - 2025.11</span>
+              <span>Robot Learning</span>
+            </div>
+            <h3>Leader-Follower Teleoperation & Isaac Sim RL/IL</h3>
+            <p>
+              Dynamixel 기반 리더-팔로워 셋업으로 6-DoF trajectory, action, sensor data를
+              수집하고 Isaac Sim 기반 학습 루프와 실기기 검증 기준을 구성했습니다.
+            </p>
+            <ul>
+              <li>시점, 조명, 마찰력 domain randomization과 sensor-noise calibration 적용</li>
+              <li>success rate, execution time, quality deviation 기준의 반복 검증 루프 운영</li>
+              <li>실기기 드립 동작 성공률 92%, 평균 수행 시간 45초 달성</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section timeline-section" id="experience" aria-labelledby="experience-title">
+        <div class="section-heading compact">
+          <p class="eyebrow">Experience</p>
+          <h2 id="experience-title">경력과 학력</h2>
+        </div>
+        <div class="timeline">
+          <article>
+            <time>2023.10 - Present</time>
+            <div>
+              <h3>XYZ Corp. · Robot Intelligence Team Researcher</h3>
+              <p>
+                실서비스형 로봇 지능 시스템에서 perception, multimodal orchestration,
+                teleoperation, RL/IL, edge deployment, 운영 검증 체계를 개발했습니다.
+              </p>
+            </div>
+          </article>
+          <article>
+            <time>2023.05 - 2023.06</time>
+            <div>
+              <h3>POSTECH Artificial Intelligence Institute · Intern Researcher</h3>
+              <p>
+                족적 및 타이어 자국 이미지의 전처리 파이프라인을 설계하고 PSNR / SSIM 기준의
+                재현 가능한 비교 실험 체계를 구축했습니다.
+              </p>
+            </div>
+          </article>
+          <article>
+            <time>2014 - 2022</time>
+            <div>
+              <h3>한양대학교 전기공학부 학사</h3>
+              <p>Electrical Engineering 기반 위에 AI, robotics, data system 역량을 확장했습니다.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section skills-section" id="skills" aria-labelledby="skills-title">
+        <div class="section-heading compact">
+          <p class="eyebrow">Skills</p>
+          <h2 id="skills-title">기술 스택</h2>
+        </div>
+        <div class="skills-grid">
+          <article>
+            <h3>Robotics / Simulation</h3>
+            <p>ROS2, Isaac Sim, Dynamixel, Leader-Follower teleoperation, RL/IL, Sim-to-Real validation</p>
+          </article>
+          <article>
+            <h3>Vision / VLM / Learning</h3>
+            <p>Qwen 3.0 VL, DepthAnythingV2, PromptDepth, SAM3, Efficient-AD, HDBSCAN, SLAM3R, PyTorch</p>
+          </article>
+          <article>
+            <h3>Data / Infra / Deployment</h3>
+            <p>Jetson Orin NX, TensorRT, vLLM, AWQ-4bit, Docker, RealSense, replay evaluation, Python</p>
+          </article>
+          <article>
+            <h3>PM / Analysis</h3>
+            <p>Problem definition, system design, operational validation, metric design, SQL, Tableau</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="contact-section section" id="contact" aria-labelledby="contact-title">
+        <p class="eyebrow">Contact</p>
+        <h2 id="contact-title">실제 로봇 운영 문제를 함께 풀 기회를 찾고 있습니다.</h2>
+        <div class="contact-links">
+          <a href="mailto:snowpoet95@gmail.com">snowpoet95@gmail.com</a>
+          <a href="https://github.com/junolabo" target="_blank" rel="noreferrer">github.com/junolabo</a>
+        </div>
+      </section>
     </main>
   </body>
 </html>

@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Junho Kim（キム・ジュノ） | Physical AI / Robot Intelligence Systems Engineer</title>
+<meta name="description" content="Junho Kim — Robot Intelligenceエンジニア。ロボットのperception、LLMによるtask planning、学習ベースのmanipulationを、ひとつにつながるシステムとして設計・実装しています。">
+<link rel="canonical" href="https://junolabo.github.io/ja/">
+<link rel="alternate" hreflang="en" href="https://junolabo.github.io/"><link rel="alternate" hreflang="ko" href="https://junolabo.github.io/ko/"><link rel="alternate" hreflang="ja" href="https://junolabo.github.io/ja/"><link rel="alternate" hreflang="x-default" href="https://junolabo.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Junho Kim（キム・ジュノ） | Physical AI / Robot Intelligence Systems Engineer">
+<meta property="og:description" content="Junho Kim — Robot Intelligenceエンジニア。ロボットのperception、LLMによるtask planning、学習ベースのmanipulationを、ひとつにつながるシステムとして設計・実装しています。">
+<meta property="og:url" content="https://junolabo.github.io/ja/">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body class="lang-ja">
+<header class="top">
+  <div class="wrap top-inner">
+    <a class="brand" href="#top">Junho Kim（キム・ジュノ）</a>
+    <nav class="nav" aria-label="Sections"><a href="#system">System</a><a href="#work">Work</a><a href="#scenarios">Scenarios</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a href="#contact">Contact</a></nav>
+    <nav class="langs" aria-label="Language"><a href=".././" lang="en" hreflang="en">English</a><a href="../ko/" lang="ko" hreflang="ko">한국어</a><a href="../ja/" lang="ja" hreflang="ja" aria-current="page">日本語</a></nav>
+  </div>
+</header>
+<main id="top" class="wrap">
+<section class="intro">
+  <div class="intro-text">
+    <h1>Junho Kim（キム・ジュノ）</h1>
+    <p class="role">Physical AI / Robot Intelligence Systems Engineer</p>
+    <p class="summary">ロボットのperception、LLMによるtask planning、学習ベースのmanipulationを、ひとつにつながるシステムとして自ら設計・実装してきたRobot Intelligenceエンジニアです。40以上の店舗で動くperception runtimeと、そのデプロイ・モデル更新の仕組み（OTA、MLOps）を作りました。その上に、複数種類のロボットをまとめるLLM agentシステムと、teleoperationに基づくmanipulation policyを加えました。perceptionとsingle-arm manipulation policyは店舗で、agentシステムは社内で運用しています。</p>
+    <dl class="facts">
+      <div><dt>Location</dt><dd>Seoul, Korea</dd></div>
+      <div><dt>Languages</dt><dd>韓国語（母語）、英語（日常会話）、日本語（日常会話）</dd></div>
+      <div><dt>Contact</dt><dd><a href="mailto:snowpoet95@gmail.com">snowpoet95@gmail.com</a> · <a href="https://www.linkedin.com/in/junho-kim-a3ba8a2aa" rel="noopener">LinkedIn</a></dd></div>
+    </dl>
+  </div>
+  <img class="photo" src="../assets/profile_image_robot.jpeg" alt="Junho Kim（キム・ジュノ）" width="487" height="684">
+</section>
+<section id="system">
+  <h2>System</h2>
+  <p class="lead">以下の3つのプロジェクトは、ひとつのシステムの階層です。運用中：店舗で稼働。運用中（社内）：社屋内の社員向け。実機テスト：実サービス前。</p>
+  <table class="map">
+    <thead><tr><th scope='col'>Layer</th><th scope='col'>Role</th><th scope='col'>Status</th></tr></thead>
+    <tbody><tr><th scope="row">Orchestrator Agent</th><td>ロボット間の作業配分</td><td><span class="status"><span class="st op">運用中（社内）</span><span class="sep"> / </span><span class="st">実機テスト</span></span></td></tr><tr><th scope="row">Task Planning Agent</th><td>ロボットごとのLLM task planning、validation、replanning</td><td><span class="status"><span class="st op">運用中（社内）</span><span class="sep"> / </span><span class="st">実機テスト</span></span></td></tr><tr><th scope="row">Execution</th><td>skill、manipulation policy</td><td><span class="status"><span class="st op">運用中</span><span class="sep"> / </span><span class="st">実機テスト</span></span></td></tr><tr><th scope="row">Perception</th><td>depth · detection · tracking、VLM anomaly detection</td><td><span class="status"><span class="st op">運用中</span></span></td></tr><tr><th scope="row">Cross-cutting: Data · Evaluation · Deployment</th><td>MLOps、評価、OTA</td><td><span class="status"><span class="st op">運用中</span><span class="sep"> / </span><span class="st">シミュレーション（評価）</span></span></td></tr></tbody>
+  </table>
+  <figure class="diagram structure">
+    <figcaption>システム構成</figcaption>
+    <div class="node top-node"><strong>Orchestrator Agent</strong><span>自然言語の依頼を作業に分けて配分</span></div>
+    <div class="link"><span>MCP tool</span></div>
+    <div class="children"><div class="node"><strong>Task Planning Agent</strong><span>ドリンク製造ロボット</span></div><div class="node"><strong>Task Planning Agent</strong><span>セミヒューマノイドロボット</span></div><div class="node"><strong>配送ロボット · 清掃ロボット</strong><span>MCP toolで包んだロボットAPI</span></div><div class="node"><strong>Perception</strong><span>depth、detection、tracking、VLM</span></div></div>
+    <div class="inside">
+      <p class="inside-label">すべてのagentの内部</p>
+      <ol class="flow" style="--cols:4"><li><strong>Context Manager</strong></li><li><strong>Task Planner (LLM)</strong></li><li><strong>Plan Validator</strong></li><li><strong>Executor</strong></li></ol>
+    </div>
+    <p class="note">LLMはplannerでのみ使います。VLMは認識にのみ使います。</p>
+  </figure>
+</section>
+<section id="work">
+  <h2>Work</h2>
+  <p class="lead">XYZ Inc · Robot Intelligence Team · 2023.10 - 現在</p>
+  <article class="project" id="perception"><h3><span class="no">1</span>Store Perception Runtime &amp; Multi-Store Deployment</h3><p class="meta"><span class="who">単独開発</span> · 2023.10 - 現在 · <span class="st op">40以上の店舗で運用中</span></p><p class="context">スタッフのいない店舗では、ピックアップ棚のどの区画（slot）が空いているか、ドリンクが正しく出たか、お客様が受け取ったかをcameraで判断する必要がありました。管理者が店舗に出向いて行っていた放置ドリンクの片付けと異常確認もロボットに任せました。店舗が増えるにつれ、デプロイとモデル更新を遠隔に移しました。</p><figure class="media" id="video-perception" hidden></figure><h4 class="group">Perception</h4><ul class="items"><li><div class="item-head"><h5>Occupancy detection</h5></div><p>ピックアップ棚の各区画にカップがあるかをdepthで判断します。学習したstereoモデルのdepthとRealSense自体のdepthを棚面基準の座標に変換し、区画上の物体の高さを測ります。depthが途切れたり古くなったりした場合は空きとは見なさず、その区画に新しいドリンクを置きません。</p></li><li><div class="item-head"><h5>Cup lifecycle tracking</h5></div><p>カップ1杯を製造からお客様の受け取りまで追跡します。gripper cameraでカップを正しく把持できたかとドリンク量を確認します。棚からカップが消えたときは、その時点のロボットの動作と照合して、お客様の受け取りとロボットによる回収を区別します。再起動後もSQLiteから状態を復元します。detectionとtrackingはC++とTensorRTで実装しました。</p></li><li><div class="item-head"><h5>Disposal flow</h5></div><p>お客様が受け取らなかったドリンクをロボットが把持して廃棄します。周囲のカップに触れずに接近できるかをdepthで確認し、天井cameraで見つけたカップをgripper cameraで再度識別してから把持します。製造と同じロボットアームを使うため、2つの作業が重ならないように制御権を管理します。</p></li><li><div class="item-head"><h5>Stereo depth</h5></div><p>大きなstereoモデル（FoundationStereo）をteacherとし、その出力を実測した棚の平面に合わせて補正してpseudo-labelを作り、リアルタイムモデル（RT-IGEV）を店舗のimageで追加学習しました。Jetson Orin上でTensorRT FP16で推論します。</p></li><li><div class="item-head"><h5>VLM anomaly detection</h5></div><p>camera imageとロボット・機器の状態を2秒ごとにまとめてVLMに入力します。QLoRAでfine-tuningしたVLMが、カップの転倒、汚れ、故障など12種類以上の状況を分類します。結果に応じてあらかじめ決めた復旧動作を実行し、人が必要な場合は通知します。直営店舗で運用しています。</p></li></ul><h4 class="group">Deployment</h4><ul class="items"><li><div class="item-head"><h5>OTA</h5></div><p>中央サーバーからTailscaleとAnsibleでruntime全体を店舗の機器にデプロイします。新しいバージョンをまずdry-runで動かし、エラー、他の機器との通信、判断結果を以前のバージョンと比較してから切り替えます。店舗のログをリアルタイムで収集し、異常時に通知します。</p></li><li><div class="item-head"><h5>MLOps pipeline</h5></div><p>店舗データから、モデルの判断が変わった区間や信頼度が低い区間を自動で選び、自動ラベリングした後に人が確認します。新しいモデルは、対象店舗での性能と全店舗での性能を別々に評価し、両方が基準を超えた場合のみデプロイします。stereo、detection、VLMの3種類に適用しています。</p></li><li><div class="item-head"><h5>Commissioning</h5></div><p>店舗ごとに異なる棚のサイズ、ロボット構成、cameraの種類を、codeの分岐ではなく設定で扱います。新規店舗は、事前点検 → camera calibration → 結果検証 → 運用開始の順で設置します。calibrationの結果をバージョン管理し、以前のバージョンに戻せます。</p></li></ul><figure class="diagram"><figcaption>MLOps pipeline：店舗データからデプロイまで</figcaption><ol class="flow" style="--cols:4"><li><strong>店舗データ</strong><span>中央サーバーに収集</span></li><li><strong>自動選別</strong><span>判断が変わった区間、信頼度が低い区間</span></li><li><strong>自動ラベリング</strong></li><li><strong>人による確認</strong></li><li><strong>学習</strong><span>stereo、detection、VLM</span></li><li><strong>評価</strong><span>対象店舗と全店舗、両方が基準を通過</span></li><li><strong>TensorRT変換</strong></li><li><strong>OTAデプロイ</strong><span>dry-runの後に切り替え</span></li></ol></figure></article><article class="project" id="agent"><h3><span class="no">2</span>Heterogeneous Multi-Robot Agent System</h3><p class="meta"><span class="who">Project Lead</span> · 2025.10 - 現在 · <span class="st">ロボット4種 · agent 3つ</span></p><p class="context">固定された製造手順では、メニューにない要望や実行中に起きた問題を処理できず、そのたびに人が介入していました。有人店舗のように柔軟に対応し、社屋内の配送と清掃まで任せるために、LLMが計画しcodeが検証するagentをロボットごとに置き、Orchestratorでまとめました。</p><figure class="media" id="video-agent" hidden></figure><h4 class="group">Agents</h4><ul class="items"><li><div class="item-head"><h5>Orchestrator Agent</h5><span class="status"><span class="st op">運用中（社内）</span><span class="sep"> / </span><span class="st">実機テスト</span></span></div><p>自然言語の依頼を作業に分け、MCP toolとして接続したagentとロボットに配分します。「アメリカーノ2杯を会議室へ」という依頼であれば、製造と積み込みはドリンク製造agentに任せ、配送ロボットには移動、エレベーター乗車、受け渡しを順に指示します。VLMが汚れを検知すると清掃ロボットを向かわせます。セミヒューマノイドagentへの配分は実機テスト段階です。</p></li><li><div class="item-head"><h5>Task Planning Agent（ドリンク製造ロボット）</h5><span class="status"><span class="st op">運用中（社内）</span><span class="sep"> / </span><span class="st">実機テスト</span></span></div><p>カップ・氷・ドリンクの抽出、ロボットアームの移動、積み込みのskillをLLMが組み合わせて製造手順を計画します。<strong>運用中（社内）：</strong>社内配送注文の製造と配送ロボットへの積み込み。失敗した場合は残りの計画を作り直します。<strong>実機テスト：</strong>メニューにない要望（氷水）、カスタムドリンク（ショット追加）、VLMが検知した異常への対応順序の判断。店舗のお客様にはまだ提供していません。</p></li><li><div class="item-head"><h5>Task Planning Agent（セミヒューマノイドロボット）</h5><span class="status"><span class="st">実機テスト</span></span></div><p>「塩パンを2個入れて」という注文を、cameraで商品を探す → 対象を選ぶ → pick-and-place の繰り返しとして計画します。把持に失敗すれば再試行し、落とせば再検索し、在庫がなければ残りの注文を再計画するか人を呼びます。袋に入れる直前ごとに対象が残りの注文にあるかを確認し、注文と異なる商品を入れません。</p></li></ul><h4 class="group">agent共通の構成要素</h4><ul class="items"><li><div class="item-head"><h5>Context Manager</h5><span class="status"><span class="st op">運用中（社内）</span></span></div><p>ロボットの位置、持っている物体、機器の在庫などの現在の状態をworld stateとscene graphとして保持し、依頼に必要な部分だけをLLMの入力として構成します。完了は、ロボットの成功応答ではなくobservationで確認します。</p></li><li><div class="item-head"><h5>Plan Validator</h5><span class="status"><span class="st op">運用中（社内）</span></span></div><p>LLMが作ったplanをロボットに送る前に、現在のworld state上で1ステップずつ事前に実行します。そのロボットのskillであるか、順序が正しいか、位置・積載容量・機器の状態から実行可能かを検査し、hallucinationによって依頼と異なる作業が入っていないかを確認します。通過しない場合（例：積載上限の超過）は、理由を付けて再計画を求めます。</p></li><li><div class="item-head"><h5>Planning evaluation</h5><span class="status"><span class="st">シミュレーション</span></span></div><p>依頼ごとに必須条件（例：製造が終わってから配送、積載上限の順守）を定め、planと実行結果を別々に採点します。評価も実際の運用と同じcode経路で実行し、正解条件はplannerに与えません。（チームメンバーと共同開発）</p></li></ul><figure class="diagram"><figcaption>依頼から実行まで：LLMが計画し、codeが検証</figcaption><ol class="flow" style="--cols:3"><li><strong>依頼</strong><span>自然言語</span></li><li><strong>Context Manager</strong><span>world state、scene graph → LLMの入力</span></li><li><strong>Task Planner (LLM)</strong><span>skillを組み合わせてplanを作成</span></li><li><strong>Plan Validator</strong><span>world state上で1ステップずつ事前に実行</span></li><li><strong>Executor</strong><span>skill、manipulation policy</span></li><li><strong>Observation</strong><span>完了を確認し、world stateを更新</span></li></ol><p class="note">検証を通過しない場合は、理由を付けてTask Plannerに戻します。実行が失敗した場合は、残りの計画を作り直します。</p></figure></article><article class="project" id="manipulation"><h3><span class="no">3</span>Teleoperation &amp; Manipulation Learning</h3><p class="meta"><span class="who">teleoperationのcodeとpolicyの学習を担当</span> · 2024.11 - 現在</p><p class="context">ゴミの片付け、パンの袋詰め、ドリップコーヒーの湯注ぎは、対象の形が一定でなかったり、両腕を同時に使う必要があったりして、決まった動作では困難でした。人がロボットを直接操作したデータを集め、その動作を学習させました。</p><figure class="media" id="video-manipulation" hidden></figure><ul class="items"><li><div class="item-head"><h5>Manipulation policy (single-arm)</h5><span class="status"><span class="st op">運用中</span></span></div><p>ドリンク製造ロボットがピックアップ棚の上のゴミを片付けます。カップと違って形が決まっていないため、ルールでは把持が困難です。天井cameraで見つけた位置の近くまでロボットアームが接近した後、自ら学習したpolicyが把持して廃棄位置に捨てます。policyの入力はリアルタイムのgripper camera imageです。直営店舗で運用しています。</p></li><li><div class="item-head"><h5>Manipulation policy (bimanual)</h5><span class="status"><span class="st">実機テスト</span></span></div><p>セミヒューマノイドロボットが包装されたパンを両腕で把持して袋に入れます。Diffusion Policy系のpolicyを自ら学習しました。Task Planning Agentが、対象以外の領域を隠したimageと指示文で、このpolicyとチームメンバーが学習したVLAを呼び出すように接続しました。</p></li><li><div class="item-head"><h5>Teleoperation</h5><span class="status"><span class="st">進行中</span></span></div><p>single-armとbimanualのleader-follower teleoperationの制御code（joint mapping、制御loop）とデモ収集codeを実装しました。camera image、ロボットのstate、actionを時刻同期し、episode単位のdataset（HDF5）として保存してpolicyの学習に使います。</p></li><li><div class="item-head"><h5>Drip coffee</h5><span class="status"><span class="st">過去に運用</span></span></div><p>単独で開発しました。ドリップコーヒーの製造を区間に分け、ケトルの把持とフィルターの設置はDiffusion Policy（IL）、湯注ぎはPPO（RL）で学習しました。PPOはsimulation（MuJoCo）で学習した後、実機で調整しました。実機評価の後、店舗サービスで使用されました。</p></li></ul><figure class="diagram"><figcaption>デモ収集からpolicyの運用まで</figcaption><ol class="flow" style="--cols:3"><li><strong>Teleoperation</strong><span>leader-follower、single-armとbimanual</span></li><li><strong>デモ収集</strong><span>image、state、actionを時刻同期</span></li><li><strong>Episode dataset</strong><span>HDF5</span></li><li><strong>Policyの学習</strong><span>Diffusion Policy系</span></li><li><strong>実機テスト</strong></li><li><strong>運用</strong><span>single-arm policy、店舗</span></li></ol></figure></article>
+</section>
+<section id="scenarios">
+  <h2>Scenarios</h2>
+  <p class="lead">各階層がどのように連携するかを示す3つの事例です。</p>
+  <article class="scenario"><div class="item-head"><h3>社屋内のドリンク配送</h3><span class="status"><span class="st op">運用中（社内）</span></span></div><p class="request">「アメリカーノ2杯を会議室へ」</p><ol class="steps"><li><strong>Orchestrator Agent</strong><span>自然言語の依頼を作業に分けます。</span></li><li><strong>Task Planning Agent（ドリンク製造ロボット）</strong><span>製造手順を計画します。Plan Validatorがplanを送る前に検査します。ロボットがドリンクを作り、配送ロボットに積み込みます。</span></li><li><strong>Orchestrator Agent → 配送ロボット</strong><span>配送ロボットに移動、エレベーター乗車、受け渡しを順に指示します。</span></li><li><strong>失敗した場合</strong><span>残りの計画を作り直します。</span></li></ol></article><article class="scenario"><div class="item-head"><h3>無人店舗での異常対応</h3><span class="status"><span class="st op">運用中</span></span></div><p class="request">店舗でカップが倒れます。</p><ol class="steps"><li><strong>Perception</strong><span>camera imageとロボット・機器の状態を2秒ごとにまとめます。</span></li><li><strong>VLM</strong><span>QLoRAでfine-tuningしたVLMが状況を分類します：カップの転倒、汚れ、故障など12種類以上。</span></li><li><strong>復旧</strong><span>結果に応じて、あらかじめ決めた復旧動作を実行します。</span></li><li><strong>通知</strong><span>人が必要な場合は通知します。</span></li></ol><p class="note">直営店舗で運用しています。Task Planning Agentが対応順序を判断する方式は実機テスト段階です。</p></article><article class="scenario"><div class="item-head"><h3>両腕でのパンの袋詰め</h3><span class="status"><span class="st">実機テスト</span></span></div><p class="request">「塩パンを2個入れて」</p><ol class="steps"><li><strong>Task Planning Agent（セミヒューマノイドロボット）</strong><span>注文を、cameraで商品を探す → 対象を選ぶ → pick-and-place の繰り返しとして計画します。</span></li><li><strong>袋に入れる直前の確認</strong><span>対象が残りの注文にあるかを確認します。</span></li><li><strong>Manipulation policy · VLA</strong><span>対象以外の領域を隠したimageと指示文で呼び出します。ロボットがパンを両腕で把持して袋に入れます。</span></li><li><strong>失敗した場合</strong><span>把持の失敗：再試行。落下：再検索。在庫なし：残りの注文を再計画するか人を呼びます。</span></li></ol></article>
+</section>
+<section id="experience">
+  <h2>Experience</h2>
+  <article class="job"><div class="item-head"><h3>XYZ Inc <span class="sub">| Researcher, Robot Intelligence Team</span></h3><span class="date">2023.10 - 現在</span></div><ul class="plain"><li>ロボットがドリンクを作って提供する無人ロボットカフェを、40以上の店舗で運営するロボットサービス企業</li><li>5人チーム。perception runtimeとデプロイの仕組みは単独で開発しました。agentシステムはProject Leadとして、設計とtask planning、Plan Validator、Context Managerを開発しました（MCP接続、ロボット連携、評価は共同）。manipulationではteleoperationのcodeとpolicyの学習を担当しました。走行システムは担当外です。</li><li>対象ロボット4種：ドリンク製造ロボット（レール型マニピュレータ）、セミヒューマノイドのモバイル双腕ロボット、自律走行の配送ロボット、自律走行の清掃ロボット</li></ul></article><article class="job"><div class="item-head"><h3>POSTECH Artificial Intelligence Institute <span class="sub">| Intern Researcher</span></h3><span class="date">2023.05 – 2023.06</span></div><ul class="plain"><li>足跡とタイヤ痕のimageの前処理の組み合わせ（blur、binarization、morphology、denoising）を比較する実験frameworkの構築に参加しました。</li></ul></article>
+  <h2 class="second">Education</h2>
+  <article class="job">
+    <div class="item-head"><h3>Hanyang University（漢陽大学校） <span class="sub">| B.S. in Electrical Engineering</span></h3><span class="date">2014 - 2022（兵役を含む）</span></div>
+  </article>
+</section>
+<section id="skills">
+  <h2>Skills</h2>
+  <dl class="skills"><div><dt>Robot Agent / LLM</dt><dd>LLM task planning、plan validation、replanning、MCP、scene graph</dd></div><div><dt>Perception / Edge AI</dt><dd>stereo depth、object detection/tracking、VLM fine-tuning（QLoRA）、PyTorch、TensorRT、Jetson</dd></div><div><dt>Robot Learning</dt><dd>teleoperation、imitation learning（Diffusion Policy）、VLA連携、reinforcement learning（PPO）、MuJoCo</dd></div><div><dt>Robotics / Deployment</dt><dd>ROS 2、C++、Python、OTA（Ansible）、MLOps、camera calibration、systemd</dd></div></dl>
+</section>
+<section id="contact">
+  <h2>Contact</h2>
+  <p class="lead">メールでのご連絡が最も早いです。</p>
+  <ul class="contact">
+    <li><span>Email</span><a href="mailto:snowpoet95@gmail.com">snowpoet95@gmail.com</a></li>
+    <li><span>LinkedIn</span><a href="https://www.linkedin.com/in/junho-kim-a3ba8a2aa" rel="noopener">linkedin.com/in/junho-kim-a3ba8a2aa</a></li>
+  </ul>
+</section>
+</main>
+<footer class="wrap foot"><span>Junho Kim</span><span>Physical AI / Robot Intelligence Systems Engineer</span></footer>
+</body>
+</html>

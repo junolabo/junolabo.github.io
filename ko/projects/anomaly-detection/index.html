@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VLM Anomaly Detection | 김준호</title>
+<meta name="description" content="fine-tuning한 VLM이 camera image와 로봇·장비 상태로 12종 이상의 이상 상황을 분류합니다. 로봇이 복구할 수 있으면 로봇이 복구하고, 할 수 없으면 사람을 부릅니다.">
+<link rel="canonical" href="https://junolabo.github.io/ko/projects/anomaly-detection/">
+<link rel="alternate" hreflang="en" href="https://junolabo.github.io/projects/anomaly-detection/"><link rel="alternate" hreflang="ko" href="https://junolabo.github.io/ko/projects/anomaly-detection/"><link rel="alternate" hreflang="ja" href="https://junolabo.github.io/ja/projects/anomaly-detection/"><link rel="alternate" hreflang="x-default" href="https://junolabo.github.io/projects/anomaly-detection/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="VLM Anomaly Detection | 김준호">
+<meta property="og:description" content="fine-tuning한 VLM이 camera image와 로봇·장비 상태로 12종 이상의 이상 상황을 분류합니다. 로봇이 복구할 수 있으면 로봇이 복구하고, 할 수 없으면 사람을 부릅니다.">
+<meta property="og:url" content="https://junolabo.github.io/ko/projects/anomaly-detection/">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body class="lang-ko">
+<header class="top">
+  <div class="wrap top-inner">
+    <a class="brand" href="/ko/">김준호</a>
+    <nav class="nav" aria-label="Sections"><a href="/ko/#projects">전체 프로젝트</a></nav>
+    <nav class="langs" aria-label="Language"><a href="/projects/anomaly-detection/" lang="en" hreflang="en">English</a><a href="/ko/projects/anomaly-detection/" lang="ko" hreflang="ko" aria-current="page">한국어</a><a href="/ja/projects/anomaly-detection/" lang="ja" hreflang="ja">日本語</a></nav>
+  </div>
+</header>
+<div class="where"><div class="wrap"><p class="crumb">Project 1 · Store Perception Runtime &amp; Multi-Store Deployment · 3개 중 2번째 부분</p><nav class="parts" aria-label="Parts"><a href="/ko/projects/perception-runtime/"><span class="lbl">1-1</span>Perception Runtime</a><a href="/ko/projects/anomaly-detection/" aria-current="page"><span class="lbl">1-2</span>VLM Anomaly Detection</a><a href="/ko/projects/deployment/"><span class="lbl">1-3</span>Deployment &amp; Model Update</a></nav></div></div>
+<main class="wrap detail">
+<p class="kicker">Project 1-2</p><h1>VLM Anomaly Detection</h1><p class="claim">fine-tuning한 VLM이 camera image와 로봇·장비 상태로 12종 이상의 이상 상황을 분류합니다. 로봇이 복구할 수 있으면 로봇이 복구하고, 할 수 없으면 사람을 부릅니다.</p><dl class="facts"><div><dt>역할</dt><dd>단독 개발</dd></div><div><dt>기간</dt><dd>Project 1의 일부 (2023.10 - 현재)</dd></div><div><dt>상태</dt><dd><span class="status"><span class="st op">직영 매장에서 운영</span></span></dd></div></dl><nav class="toc" aria-label="이 페이지의 내용"><a href="#problem">문제</a><a href="#structure">구조</a><a href="#how">동작</a><a href="#decisions">설계 판단</a><a href="#case">한 건을 끝까지 따라가기</a><a href="#scope">범위</a><a href="#links">연결된 프로젝트</a></nav><figure class="media" hidden></figure>
+<h2 id="problem">문제</h2>
+<p>매장에서 무엇이 잘못됐는지 확인하는 일은 사람이 필요했습니다. 매장에 나가는 관리자나 원격으로 지켜보는 운영 인력이 맡았습니다. 이들 없이 운영하려면, 시스템이 상황을 알아차리고 무엇을 할지까지 정해야 합니다.</p>
+<ol class="points"><li><strong>이상 상황은 모양이 정해져 있지 않습니다.</strong><span>컵 쓰러짐, 오염, 장비 고장 등 종류가 많습니다. 종류마다 규칙이나 검출기를 따로 만드는 방식으로는 새로 나타나는 종류를 따라가지 못합니다.</span></li><li><strong>영상만으로는 부족합니다.</strong><span>영상에는 그 순간 로봇과 장비가 무엇을 하고 있는지가 나오지 않습니다. 상태를 영상과 함께 읽어야 합니다.</span></li><li><strong>틀린 분류가 로봇 동작이 되면 안 됩니다.</strong><span>모델은 틀릴 수 있고, 출력의 형식이 깨질 수도 있습니다. 모델과 로봇 사이에 검사하는 단계가 있어야 합니다.</span></li><li><strong>매장은 이미 운영 중이었습니다.</strong><span>운영 중인 시스템의 인터페이스를 바꾸지 않고 새 기능을 붙여야 했습니다.</span></li></ol>
+<h2 id="structure">구조</h2>
+<figure class="diagram"><figcaption>관측에서 대응까지</figcaption><ol class="flow" style="--cols:5"><li><strong>입력 묶음</strong><span>camera image + 로봇·장비 상태, 2초마다</span></li><li class="k-judge"><strong>VLM</strong><span>QLoRA로 fine-tuning, 상황을 분류</span></li><li><strong>고정된 출력 형식</strong><span>출력이 schema를 따라야 함</span></li><li class="k-judge"><strong>규칙 검사</strong><span>출력을 쓰기 전에 code가 검사</span></li><li><strong>대응</strong><span>로봇이 정해 둔 복구 동작을 실행하거나, 사람이 필요하면 알림</span></li></ol><p class="legend"><span><i class="k-judge"></i>판단</span></p><p class="note">VLM은 인식에만 씁니다. 로봇을 제어하지 않습니다.</p></figure>
+<h2 id="how">동작</h2>
+<div class="item-head sub"><h3>VLM anomaly detection</h3><span class="status"><span class="st op">운영</span></span></div>
+<p>camera image와 로봇·장비 상태를 2초마다 묶어 VLM에 넣습니다. VLM은 매장 상황으로 QLoRA fine-tuning한 소형 모델이고, 컵 쓰러짐, 오염, 고장 등 12종 이상의 상황을 분류합니다.</p>
+<p>모델의 출력은 고정된 schema로 강제하므로 항상 해석할 수 있습니다. 결과를 쓰기 전에 code로 쓴 규칙이 검사합니다. 입력이 최신이었는지, 입력을 준 node가 정상이었는지, 손 진입이나 쏟아짐 같은 규칙과 결과가 맞는지를 봅니다.</p>
+<p class="note boxed">이전 방식: 영상 이상 감지 모델이 음료 유출과 심한 오염을 찾아 그 칸의 서빙을 막았습니다. 비정형 상황에는 VLM이 더 알맞아서 VLM으로 바꿨습니다.</p>
+<div class="item-head sub"><h3>상황별 대응</h3></div>
+<p>원칙: 로봇이 풀 수 있는 것은 로봇이 풉니다. 사람이 필요한 것은 알림을 보냅니다.</p>
+<table class="grid cols-3"><thead><tr><th scope="col">상황</th><th scope="col">대응</th><th scope="col">누가 하는가</th></tr></thead><tbody><tr><td data-label="상황">컵이 쓰러짐. 음료는 흐르지 않음</td><td data-label="대응">컵을 집어 폐기</td><td data-label="누가 하는가">로봇</td></tr><tr class="r-fail"><td data-label="상황">컵이 쓰러지고 음료가 흐름</td><td data-label="대응">관리자 호출</td><td data-label="누가 하는가">사람</td></tr><tr><td data-label="상황">건물 안의 오염</td><td data-label="대응">Orchestrator Agent가 청소 로봇을 보냄</td><td data-label="누가 하는가">청소 로봇</td></tr><tr class="r-fail"><td data-label="상황">치명적인 장비 고장</td><td data-label="대응">알림 전송</td><td data-label="누가 하는가">사람</td></tr></tbody></table>
+<div class="item-head sub"><h3>검토한 사례로 모델 개선</h3></div>
+<p>사람이 검토한 결과가 모델과 달랐던 사례는 다음 학습 데이터로 들어갑니다. VLM은 MLOps pipeline으로 갱신하는 세 모델 중 하나입니다.</p>
+<h2 id="decisions">설계 판단</h2>
+<table class="grid cols-3"><thead><tr><th scope="col">판단</th><th scope="col">이유</th><th scope="col">막는 문제</th></tr></thead><tbody><tr><td data-label="판단">영상을 로봇·장비 상태와 묶음</td><td data-label="이유">영상에는 로봇이 하는 일이 나오지 않음</td><td data-label="막는 문제">영상만으로 상황을 판단하는 것</td></tr><tr><td data-label="판단">출력이 고정된 schema를 따르게 함</td><td data-label="이유">자유로운 글로는 동작을 고를 수 없음</td><td data-label="막는 문제">해석할 수 없는 출력</td></tr><tr><td data-label="판단">VLM과 동작 사이에 규칙 검사를 둠</td><td data-label="이유">모델은 틀릴 수 있음</td><td data-label="막는 문제">틀린 결과가 로봇 동작이 되는 것</td></tr><tr><td data-label="판단">운영 중인 시스템 옆에 읽기 전용 사이드카로 붙임</td><td data-label="이유">매장이 이미 운영 중이었음</td><td data-label="막는 문제">운영 중인 ROS 2 인터페이스를 바꾸는 것</td></tr><tr><td data-label="판단">VLM은 인식만 함. 로봇의 동작을 고르거나 제어하지 않음</td><td data-label="이유">상황 종류별 대응은 모델 밖에서 정해 둠</td><td data-label="막는 문제">모델의 출력이 로봇을 직접 움직이는 것</td></tr></tbody></table>
+<h2 id="case">한 건을 끝까지 따라가기</h2>
+<article class="scenario"><div class="item-head"><h3>매장에서 컵이 쓰러짐</h3><span class="status"><span class="st op">직영 매장에서 운영</span></span></div><ol class="flow strip" style="--cols:5"><li><strong>입력 묶음</strong><span>image + 상태</span></li><li class="k-judge"><strong>VLM</strong><span>컵 쓰러짐</span></li><li class="k-judge"><strong>규칙 검사</strong></li><li class="k-judge"><strong>음료가 흘렀는가</strong></li><li><strong>대응</strong><span>아니오: 로봇이 컵을 폐기. 예: 관리자 호출</span></li></ol><p class="legend"><span><i class="k-judge"></i>판단</span></p><table class="steps"><tbody><tr><th scope="row">관측</th><td>camera image와 로봇·장비 상태를 묶음. 2초마다 반복</td></tr><tr><th scope="row">분류</th><td>VLM이 상황의 종류를 고정된 schema로 반환</td></tr><tr><th scope="row">검사</th><td>입력이 최신이었는지, 결과가 규칙과 맞는지를 규칙 검사가 확인</td></tr><tr><th scope="row">대응</th><td>음료가 흐르지 않았으면 로봇이 컵을 집어 폐기. 흘렀으면 관리자 호출</td></tr></tbody></table><p class="note">지금은 정해 둔 flow가 대응을 실행합니다. Task Planning Agent가 대응 순서(폐기, 재제조, 청소)를 판단하는 방식은 실로봇 테스트 단계입니다.</p></article>
+<h2 id="scope">범위</h2>
+<table class="grid cols-2"><thead><tr><th scope="col">항목</th><th scope="col">내용</th></tr></thead><tbody><tr><th scope="row" data-label="항목">상태</th><td data-label="내용"><span class="status"><span class="st op">직영 매장에서 운영</span></span></td></tr><tr><th scope="row" data-label="항목">직접 한 것</th><td data-label="내용">전부. 입력 묶음, fine-tuning, 출력 형식과 규칙 검사, 복구 flow, 운영 중인 시스템과의 연결.</td></tr><tr><th scope="row" data-label="항목">가져다 쓴 기술</th><td data-label="내용">기반 VLM은 공개된 모델입니다. fine-tuning을 했고 구조를 직접 설계하지는 않았습니다.</td></tr></tbody></table>
+<h2 id="links">연결된 프로젝트</h2>
+<ul class="links"><li><a href="/ko/projects/perception-runtime/"><span class="lbl">Project 1-1</span>Perception Runtime</a><span>camera image는 선반과 컵을 판단하는 같은 camera에서 옵니다.</span></li><li><a href="/ko/projects/deployment/"><span class="lbl">Project 1-3</span>Deployment &amp; Model Update</a><span>VLM은 MLOps pipeline으로 다시 학습하고 배포합니다.</span></li><li><a href="/ko/projects/agent-system/"><span class="lbl">Project 2</span>Heterogeneous Multi-Robot Agent System</a><span>오염을 감지하면 Orchestrator Agent가 청소 로봇을 보냅니다. agent의 대응 순서 판단은 실로봇 테스트 단계입니다.</span></li></ul>
+<nav class="pager"><a class="prev" href="/ko/projects/perception-runtime/"><span>이전 · Project 1-1</span>Perception Runtime</a><a class="next" href="/ko/projects/deployment/"><span>다음 · Project 1-3</span>Deployment &amp; Model Update</a></nav>
+</main>
+<footer class="wrap foot"><span>김준호</span><span>Physical AI / Robot Intelligence Systems Engineer</span></footer>
+</body>
+</html>

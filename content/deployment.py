@@ -8,7 +8,7 @@ PAGE = {
     "claim": L(
         "The runtime and the models of 40+ stores are updated remotely. A new version or a new model reaches a store only after it passes a check.",
         "40여 개 매장의 runtime과 모델을 원격으로 갱신합니다. 새 버전과 새 모델은 검사를 통과한 뒤에만 매장에 들어갑니다.",
-        "40以上の店舗のruntimeとモデルを遠隔で更新します。新しいバージョンと新しいモデルは、検査を通過した後にのみ店舗に入ります。",
+        "40店舗以上のruntimeとモデルを遠隔で更新します。新しいバージョンと新しいモデルは、検査を通過した後にのみ店舗に配布されます。",
     ),
     "facts": [
         ("role", L("Sole developer", "단독 개발", "単独開発")),
@@ -50,9 +50,9 @@ PAGE = {
             ],
             "core_title": L("Deployment system", "배포 체계", "デプロイの仕組み"),
             "nodes": [
-                ("MLOps pipeline", L("select, label, review, train, evaluate", "선별, 라벨링, 검토, 학습, 평가", "選別、ラベリング、確認、学習、評価"), "judge"),
-                ("OTA", L("dry-run, compare, swap", "dry-run, 비교, 교체", "dry-run、比較、切り替え"), "judge"),
-                ("Commissioning", L("pre-check, calibration, verification", "사전 점검, calibration, 검증", "事前点検、calibration、検証"), "judge"),
+                ("MLOps pipeline", L("select, label, review, train, evaluate", "선별, 라벨링, 검토, 학습, 평가", "選別、ラベリング、確認、学習、評価"), None),
+                ("OTA", L("dry-run, compare, swap", "dry-run, 비교, 교체", "dry-run、比較、切り替え"), None),
+                ("Commissioning", L("pre-check, calibration, verification", "사전 점검, calibration, 검증", "事前点検、calibration、検証"), None),
             ],
             "shared": (L("Per-store configuration and versioned calibration", "매장별 설정과 버전으로 관리하는 calibration", "店舗ごとの設定と、バージョン管理されたcalibration"),
                        L("store differences are data, not code branches", "매장의 차이는 code 분기가 아니라 데이터", "店舗の違いはcodeの分岐ではなくデータ")),
@@ -94,7 +94,7 @@ PAGE = {
             (L("Dry-run", "Dry-run", "Dry-run"), L("before the running service is replaced", "운영 중인 서비스를 교체하기 전에", "運用中のサービスを置き換える前に"), None),
             (L("Comparison", "비교", "比較"), L("errors, communication with other devices, decisions", "오류, 다른 장치와의 통신, 판단 결과", "エラー、他の機器との通信、判断結果"), "judge"),
             (L("Swap", "교체", "切り替え"), L("the service is replaced", "서비스를 교체", "サービスを置き換える"), None),
-            (L("Live logs", "실시간 로그", "リアルタイムのログ"), L("an anomaly raises an alert", "이상 시 알림", "異常時に通知"), "fail"),
+            (L("Live logs", "실시간 로그", "リアルタイムのログ"), L("an anomaly raises an alert", "이상 시 알림", "異常時に通知"), None),
         ], None),
 
         ("h3", "Commissioning", ["op"]),
@@ -153,9 +153,9 @@ PAGE = {
 
         ("h2", "links"),
         ("links", [
-            ("perception-runtime", L("The stereo and detection models and the runtime that this page deploys.",
-                                     "이 페이지가 배포하는 stereo 모델, detection 모델, runtime.",
-                                     "このページがデプロイするstereoモデル、detectionモデル、runtime。")),
+            ("perception-runtime", L("The stereo and detection models and the runtime that the system on this page deploys.",
+                                     "이 페이지의 체계로 배포하는 stereo 모델, detection 모델, runtime.",
+                                     "このページの仕組みでデプロイするstereoモデル、detectionモデル、runtime。")),
             ("anomaly-detection", L("The VLM is the third model updated by the pipeline. Reviewed cases go into its next training data.",
                                     "VLM은 pipeline으로 갱신하는 세 번째 모델입니다. 검토한 사례가 다음 학습 데이터로 들어갑니다.",
                                     "VLMは、pipelineで更新する3つ目のモデルです。確認済みの事例が次の学習データに入ります。")),

@@ -6,8 +6,8 @@ PAGE = {
     "project": 1,
     "title": "VLM Anomaly Detection",
     "claim": L(
-        "A fine-tuned VLM classifies 12+ irregular situations from camera images and from robot and equipment state. Where the robot can recover, it recovers. Where it cannot, a person is called.",
-        "fine-tuning한 VLM이 camera image와 로봇·장비 상태로 12종 이상의 이상 상황을 분류합니다. 로봇이 복구할 수 있으면 로봇이 복구하고, 할 수 없으면 사람을 부릅니다.",
+        "A fine-tuned VLM classifies 12+ kinds of anomalies from camera images and from robot and equipment state. Where the robot can recover, it recovers. Where it cannot, a person is called.",
+        "fine-tuning한 VLM이 camera image와 로봇·장비 상태로 이상 상황을 12종 이상 분류합니다. 로봇이 복구할 수 있으면 로봇이 복구하고, 할 수 없으면 사람을 부릅니다.",
         "fine-tuningしたVLMが、camera imageとロボット・機器の状態から12種類以上の異常を分類します。ロボットが復旧できる場合はロボットが復旧し、できない場合は人を呼びます。",
     ),
     "facts": [
@@ -19,10 +19,10 @@ PAGE = {
         ("h2", "problem"),
         ("p", L(
             "Checking whether something went wrong in a store used to need a person: a manager who went to the store, or an operator who watched remotely. To run without them, the system has to notice the situation and also decide what to do about it.",
-            "매장에서 무엇이 잘못됐는지 확인하는 일은 사람이 필요했습니다. 매장에 나가는 관리자나 원격으로 지켜보는 운영 인력이 맡았습니다. 이들 없이 운영하려면, 시스템이 상황을 알아차리고 무엇을 할지까지 정해야 합니다.",
+            "매장에 문제가 생겼는지 확인하는 일에는 사람이 필요했습니다. 매장에 나가는 관리자나 원격으로 지켜보는 운영 인력이 맡았습니다. 이들 없이 운영하려면, 시스템이 상황을 알아차리고 무엇을 할지까지 정해야 합니다.",
             "店舗で何かが起きていないかを確認する作業には、人が必要でした。店舗に出向く管理者や、遠隔で見守るオペレーターが担当していました。その人たちなしで運営するには、システムが状況に気づき、何をするかまで決める必要があります。")),
         ("points", [
-            (L("Irregular situations have no fixed shape.", "이상 상황은 모양이 정해져 있지 않습니다.", "異常な状況には決まった形がありません。"),
+            (L("Anomalies have no fixed shape.", "이상 상황은 모양이 정해져 있지 않습니다.", "異常には決まった形がありません。"),
              L("A fallen cup, contamination, an equipment failure, and many others. Writing a separate rule or detector for every kind does not keep up with the kinds that appear.",
                "컵 쓰러짐, 오염, 장비 고장 등 종류가 많습니다. 종류마다 규칙이나 검출기를 따로 만드는 방식으로는 새로 나타나는 종류를 따라가지 못합니다.",
                "カップの転倒、汚れ、機器の故障など、種類が多くあります。種類ごとにルールや検出器を作る方式では、新しく現れる種類に追いつけません。")),
@@ -42,7 +42,7 @@ PAGE = {
 
         ("h2", "structure"),
         ("flow", L("From observation to response", "관측에서 대응까지", "観測から対応まで"), [
-            (L("Input bundle", "입력 묶음", "入力のまとまり"), L("camera images + robot and equipment state, every 2 seconds", "camera image + 로봇·장비 상태, 2초마다", "camera image + ロボット・機器の状態、2秒ごと"), None),
+            (L("Input bundle", "입력 묶음", "入力セット"), L("camera images + robot and equipment state, every 2 seconds", "camera image + 로봇·장비 상태, 2초마다", "camera image + ロボット・機器の状態、2秒ごと"), None),
             ("VLM", L("fine-tuned with QLoRA, classifies the situation", "QLoRA로 fine-tuning, 상황을 분류", "QLoRAでfine-tuning、状況を分類"), "judge"),
             (L("Fixed output format", "고정된 출력 형식", "固定の出力形式"), L("the output must follow a schema", "출력이 schema를 따라야 함", "出力はschemaに従う必要がある"), None),
             (L("Rule check", "규칙 검사", "ルールによる検査"), L("code checks the output before it is used", "출력을 쓰기 전에 code가 검사", "出力を使う前にcodeが検査"), "judge"),
@@ -53,19 +53,19 @@ PAGE = {
             "VLMは認識にのみ使います。ロボットを制御しません。")),
 
         ("h2", "how"),
-        ("h3", "VLM anomaly detection", ["op"]),
+        ("h3", "VLM anomaly detection", ["op_direct"]),
         ("p", L(
             "Camera images and robot and equipment state are bundled every 2 seconds and given to the VLM. The VLM is a small model fine-tuned with QLoRA on store situations, and it classifies 12+ kinds of situations such as a fallen cup, contamination, and equipment failure.",
             "camera image와 로봇·장비 상태를 2초마다 묶어 VLM에 넣습니다. VLM은 매장 상황으로 QLoRA fine-tuning한 소형 모델이고, 컵 쓰러짐, 오염, 고장 등 12종 이상의 상황을 분류합니다.",
             "camera imageとロボット・機器の状態を2秒ごとにまとめてVLMに入力します。VLMは店舗の状況でQLoRA fine-tuningした小型モデルで、カップの転倒、汚れ、故障など12種類以上の状況を分類します。")),
         ("p", L(
-            "The model's output is forced into a fixed schema, so it can always be parsed. Before the result is used, rule-based checks written in code look at it: whether the inputs were fresh, whether the nodes that supplied them were healthy, and whether the result is consistent with rules such as a hand entering the area or a spill.",
-            "모델의 출력은 고정된 schema로 강제하므로 항상 해석할 수 있습니다. 결과를 쓰기 전에 code로 쓴 규칙이 검사합니다. 입력이 최신이었는지, 입력을 준 node가 정상이었는지, 손 진입이나 쏟아짐 같은 규칙과 결과가 맞는지를 봅니다.",
-            "モデルの出力は固定のschemaに強制するため、常に解析できます。結果を使う前に、codeで書いたルールが検査します。入力が最新だったか、入力を供給したnodeが正常だったか、手の進入やこぼれなどのルールと結果が合っているかを確認します。")),
+            "The model's output is forced into a fixed schema, so code can parse it. Before the result is used, rule-based checks written in code look at it: whether the inputs were fresh, whether the nodes that supplied them were healthy, and whether the result is consistent with rules such as a hand entering the area or a spill.",
+            "모델의 출력은 고정된 schema로 강제하므로 code가 해석할 수 있습니다. 결과를 쓰기 전에 code로 쓴 규칙이 검사합니다. 입력이 최신이었는지, 입력을 준 node가 정상이었는지, 손 진입이나 쏟아짐 같은 규칙과 결과가 맞는지를 봅니다.",
+            "モデルの出力は固定のschemaに強制するため、codeで解析できます。結果を使う前に、codeで書いたルールが検査します。入力が最新だったか、入力を供給したnodeが正常だったか、手の進入やこぼれなどのルールと結果が合っているかを確認します。")),
         ("note", L(
-            "Earlier version: an image anomaly detector found spills and heavy contamination and blocked serving on that slot. The VLM replaced it because a VLM fits irregular situations better.",
-            "이전 방식: 영상 이상 감지 모델이 음료 유출과 심한 오염을 찾아 그 칸의 서빙을 막았습니다. 비정형 상황에는 VLM이 더 알맞아서 VLM으로 바꿨습니다.",
-            "以前の方式：画像の異常検知モデルがドリンクのこぼれとひどい汚れを見つけ、その区画への提供を止めていました。非定型の状況にはVLMの方が適しているため、VLMに置き換えました。")),
+            "Earlier version: an image anomaly detector found spills and heavy contamination and blocked serving on that slot. The VLM replaced it because a VLM fits situations that have no fixed shape better.",
+            "이전 방식: 영상 이상 감지 모델이 음료 유출과 심한 오염을 찾아 그 칸의 서빙을 막았습니다. 모양이 정해지지 않은 상황에는 VLM이 더 알맞아서 VLM으로 바꿨습니다.",
+            "以前の方式：画像の異常検知モデルがドリンクのこぼれとひどい汚れを見つけ、その区画への提供を止めていました。決まった形のない状況にはVLMの方が適しているため、VLMに置き換えました。")),
 
         ("h3", L("Response by situation", "상황별 대응", "状況ごとの対応"), None),
         ("p", L(
@@ -101,7 +101,7 @@ PAGE = {
              L("An image does not show what the robot is doing.", "영상에는 로봇이 하는 일이 나오지 않음", "映像にはロボットの動作が映らない"),
              L("Judging a situation from the image alone.", "영상만으로 상황을 판단하는 것", "映像だけで状況を判断すること")],
             [L("The output must follow a fixed schema.", "출력이 고정된 schema를 따르게 함", "出力を固定のschemaに従わせる"),
-             L("Free text cannot be used to choose an action.", "자유로운 글로는 동작을 고를 수 없음", "自由な文章では動作を選べない"),
+             L("Free text cannot be used to choose a response.", "자유 형식 문장으로는 대응 동작을 고를 수 없음", "自由形式の文章では対応動作を選べない"),
              L("Output that cannot be parsed.", "해석할 수 없는 출력", "解析できない出力")],
             [L("Rule-based checks stand between the VLM and the action.", "VLM과 동작 사이에 규칙 검사를 둠", "VLMと動作の間にルールによる検査を置く"),
              L("The model can be wrong.", "모델은 틀릴 수 있음", "モデルは誤ることがある"),
@@ -119,13 +119,7 @@ PAGE = {
             "title": L("A cup falls over in the store", "매장에서 컵이 쓰러짐", "店舗でカップが倒れる"),
             "status": ["op_direct"],
             "request": None,
-            "strip": [
-                (L("Input bundle", "입력 묶음", "入力のまとまり"), L("images + state", "image + 상태", "image + 状態"), None),
-                ("VLM", L("fallen cup", "컵 쓰러짐", "カップの転倒"), "judge"),
-                (L("Rule check", "규칙 검사", "ルールによる検査"), None, "judge"),
-                (L("Did the drink spill?", "음료가 흘렀는가", "ドリンクはこぼれたか"), None, "judge"),
-                (L("Response", "대응", "対応"), L("no: the robot disposes of the cup. yes: the manager is called", "아니오: 로봇이 컵을 폐기. 예: 관리자 호출", "いいえ：ロボットがカップを廃棄。はい：管理者を呼ぶ"), None),
-            ],
+            "strip": [],
             "rows": [
                 (L("Observation", "관측", "観測"), L("Camera images and robot and equipment state are bundled. This happens every 2 seconds.", "camera image와 로봇·장비 상태를 묶음. 2초마다 반복", "camera imageとロボット・機器の状態をまとめる。2秒ごとに繰り返す")),
                 (L("Classification", "분류", "分類"), L("The VLM returns the kind of situation in the fixed schema.", "VLM이 상황의 종류를 고정된 schema로 반환", "VLMが状況の種類を固定のschemaで返す")),
@@ -143,7 +137,7 @@ PAGE = {
             [SC_STATUS, ("st", ["op_direct"])],
             [SC_MINE, L("All of it: the input bundle, fine-tuning, the output format and rule checks, the recovery flow, and integration into the running system.",
                         "전부. 입력 묶음, fine-tuning, 출력 형식과 규칙 검사, 복구 flow, 운영 중인 시스템과의 연결.",
-                        "すべて。入力のまとまり、fine-tuning、出力形式とルールによる検査、復旧flow、運用中のシステムとの接続。")],
+                        "すべて。入力セット、fine-tuning、出力形式とルールによる検査、復旧flow、運用中のシステムとの接続。")],
             [SC_EXISTING, L("The base VLM is a public model. I fine-tuned it and did not design its architecture.",
                             "기반 VLM은 공개된 모델입니다. fine-tuning을 했고 구조를 직접 설계하지는 않았습니다.",
                             "ベースのVLMは公開されているモデルです。fine-tuningを行い、構造は自分で設計していません。")],
@@ -151,13 +145,13 @@ PAGE = {
 
         ("h2", "links"),
         ("links", [
-            ("perception-runtime", L("The camera images come from the same cameras that judge the shelf and the cups.",
+            ("perception-runtime", L("The camera images come from the same cameras that watch the shelf and the cups.",
                                      "camera image는 선반과 컵을 판단하는 같은 camera에서 옵니다.",
                                      "camera imageは、棚とカップを判断するのと同じcameraから得ます。")),
             ("deployment", L("The VLM is retrained and deployed through the MLOps pipeline.",
                              "VLM은 MLOps pipeline으로 다시 학습하고 배포합니다.",
                              "VLMはMLOps pipelineで再学習し、デプロイします。")),
-            ("agent-system", L("The Orchestrator Agent dispatches the cleaning robot on contamination. The agent's judgment of response order is in real-robot testing.",
+            ("agent-system", L("The Orchestrator Agent dispatches the cleaning robot on contamination. The agent's decision on response order is in real-robot testing.",
                                "오염을 감지하면 Orchestrator Agent가 청소 로봇을 보냅니다. agent의 대응 순서 판단은 실로봇 테스트 단계입니다.",
                                "汚れを検知すると、Orchestrator Agentが清掃ロボットを向かわせます。agentによる対応順序の判断は実機テスト段階です。")),
         ]),

@@ -10,9 +10,9 @@ PAGE = {
     "project": 2,
     "title": "Heterogeneous Multi-Robot Agent System",
     "claim": L(
-        "The LLM plans and code validates. Each robot has its own agent, and an Orchestrator ties four robot types together.",
-        "LLM이 계획하고 code가 검증합니다. 로봇마다 agent를 두고, Orchestrator가 로봇 4종을 묶습니다.",
-        "LLMが計画し、codeが検証します。ロボットごとにagentを置き、Orchestratorが4種のロボットをまとめます。",
+        "The LLM plans and code validates. The beverage-making robot and the semi-humanoid robot each have a Task Planning Agent, the delivery and cleaning robots are called as tools, and an Orchestrator Agent ties the four robot types together.",
+        "LLM이 계획하고 code가 검증합니다. 음료 제조 로봇과 세미 휴머노이드 로봇에는 Task Planning Agent를 두고, 배송 로봇과 청소 로봇은 tool로 호출합니다. Orchestrator Agent가 로봇 4종을 묶습니다.",
+        "LLMが計画し、codeが検証します。ドリンク製造ロボットとセミヒューマノイドロボットにはTask Planning Agentを置き、配送ロボットと清掃ロボットはtoolとして呼び出します。Orchestrator Agentが4種のロボットをまとめます。",
     ),
     "facts": [
         ("role", "Project Lead"),
@@ -61,7 +61,7 @@ PAGE = {
                 "Orchestrator Agent 입장에서는 다른 agent도 하나의 도구입니다. 배송 로봇과 청소 로봇에는 따로 agent가 없습니다.",
                 "Orchestrator Agentから見ると、ほかのagentもひとつのツールです。配送ロボットと清掃ロボットには専用のagentがありません。"),
         }),
-        ("flow", L("Inside every agent: one turn of a plan", "모든 agent의 내부: plan의 한 바퀴", "すべてのagentの内部：planの1サイクル"), [
+        ("flow", L("Inside a Task Planning Agent: one turn of a plan", "Task Planning Agent의 내부: plan의 한 바퀴", "Task Planning Agentの内部：planの1サイクル"), [
             (L("Request", "요청", "依頼"), L("natural language", "자연어", "自然言語"), None),
             ("Context Manager", L("current state → LLM input", "현재 상태 → LLM 입력", "現在の状態 → LLMの入力"), None),
             ("Task Planner (LLM)", L("composes skills into a plan", "skill을 조합해 plan 작성", "skillを組み合わせてplanを作成"), None),
@@ -69,22 +69,22 @@ PAGE = {
             ("Executor", L("skill, manipulation policy", "skill, manipulation policy", "skill、manipulation policy"), None),
             ("Observation", L("confirms the result, updates the state", "결과를 확인하고 상태를 갱신", "結果を確認し、状態を更新"), "judge"),
         ], L(
-            "Validation fails: the plan returns to the Task Planner with the reason. Execution fails: the remaining plan is rebuilt. The LLM is used only in the planner.",
-            "검증 실패: 이유를 붙여 Task Planner로 되돌립니다. 실행 실패: 남은 계획을 다시 만듭니다. LLM은 planner에서만 씁니다.",
-            "検証の失敗：理由を付けてTask Plannerに戻します。実行の失敗：残りの計画を作り直します。LLMはplannerでのみ使います。")),
+            "Validation fails: the plan returns to the Task Planner with the reason. Execution fails: the remaining plan is rebuilt.",
+            "검증 실패: 이유를 붙여 Task Planner로 되돌립니다. 실행 실패: 남은 계획을 다시 만듭니다.",
+            "検証の失敗：理由を付けてTask Plannerに戻します。実行の失敗：残りの計画を作り直します。")),
 
         ("h2", "how"),
         ("h3", "Orchestrator Agent", ["op_inhouse", "test"]),
         ("p", L(
-            "It splits a natural-language request into tasks and distributes them to the agents and robots connected as MCP tools. For “two Americanos to the meeting room”, making and loading go to the beverage-making agent, and the delivery robot is instructed in order: move, ride the elevator, hand over. When the VLM detects contamination, the cleaning robot is dispatched. Distribution to the semi-humanoid agent is in real-robot testing.",
-            "자연어 요청을 작업으로 나눠, MCP tool로 연결한 agent와 로봇에 배분합니다. “아메리카노 2잔을 회의실로” 요청이면 제조와 적재는 음료 제조 agent에 맡기고, 배송 로봇에는 이동, 엘리베이터 탑승, 전달을 순서대로 지시합니다. VLM이 오염을 감지하면 청소 로봇을 보냅니다. 세미 휴머노이드 agent로의 배분은 실로봇 테스트 단계입니다.",
-            "自然言語の依頼を作業に分け、MCP toolとして接続したagentとロボットに配分します。「アメリカーノ2杯を会議室へ」という依頼であれば、製造と積み込みはドリンク製造agentに任せ、配送ロボットには移動、エレベーター乗車、受け渡しを順に指示します。VLMが汚れを検知すると清掃ロボットを向かわせます。セミヒューマノイドagentへの配分は実機テスト段階です。")),
+            "It splits a natural-language request into tasks and distributes them to the agents and robots connected as MCP tools. For “two Americanos to the meeting room”, making and loading go to the beverage-making agent, and delivery goes to the delivery robot. When the VLM detects contamination, the cleaning robot is dispatched. Distribution to the semi-humanoid agent is in real-robot testing.",
+            "자연어 요청을 작업으로 나눠, MCP tool로 연결한 agent와 로봇에 배분합니다. “아메리카노 2잔을 회의실로” 요청이면 제조와 적재는 음료 제조 agent에, 배송은 배송 로봇에 맡깁니다. VLM이 오염을 감지하면 청소 로봇을 보냅니다. 세미 휴머노이드 agent로의 배분은 실로봇 테스트 단계입니다.",
+            "自然言語の依頼を作業に分け、MCP toolとして接続したagentとロボットに配分します。「アメリカーノ2杯を会議室へ」という依頼であれば、製造と積み込みはドリンク製造agentに、配送は配送ロボットに任せます。VLMが汚れを検知すると清掃ロボットを向かわせます。セミヒューマノイドagentへの配分は実機テスト段階です。")),
 
         ("h3", TPA_BEV, ["op_inhouse", "test"]),
         ("p", L(
             "The LLM composes skills (cup, ice, and beverage dispensing, arm motion, loading) into a making sequence. The sequence is not fixed. Rules are given as constraints, not as a sequence: an iced drink needs cup, then ice, then beverage, and the planner decides the rest within that.",
             "컵·얼음·음료 추출, 로봇팔 이동, 적재 skill을 LLM이 조합해 제조 순서를 계획합니다. 순서를 고정하지 않습니다. 규칙은 순서가 아니라 제약으로 줍니다. ICE 음료는 컵, 얼음, 음료의 순서여야 하고, 그 안에서 나머지는 planner가 정합니다.",
-            "カップ・氷・ドリンクの抽出、ロボットアームの移動、積み込みのskillをLLMが組み合わせて製造手順を計画します。手順は固定しません。ルールは手順ではなく制約として与えます。アイスドリンクはカップ、氷、ドリンクの順である必要があり、その中で残りはplannerが決めます。")),
+            "カップ・氷の払い出し、ドリンクの抽出、ロボットアームの移動、積み込みのskillをLLMが組み合わせて製造手順を計画します。手順は固定しません。ルールは手順ではなく制約として与えます。アイスドリンクはカップ、氷、ドリンクの順である必要があり、その中で残りはplannerが決めます。")),
         ("p", L(
             "The state of dispenser channels (kind, state, stock), the robot, cups, and slots is kept as a graph and updated during execution. When the same channel fails repeatedly, it is marked unavailable and another channel is used. The agent keeps a short-term memory of the current order and a long-term memory of how past incidents were handled.",
             "디스펜서 채널의 종류·상태·재고, 로봇, 컵, 칸의 상태를 graph로 두고 실행 중에 갱신합니다. 같은 채널이 반복해서 실패하면 사용 불가로 표시하고 다른 채널을 씁니다. 현재 주문에 대한 단기 메모리와 과거 대응 사례에 대한 장기 메모리를 둡니다.",
@@ -104,7 +104,7 @@ PAGE = {
 
         ("h3", TPA_SEMI, ["test"]),
         ("p", L(
-            "It plans an order such as “bag two salt breads” as a repetition of find the product by camera → select the target → pick-and-place. Right before each bagging it checks that the target is still in the remaining order, so a product different from the order is not bagged. The task is complete only when what is in the bag matches the order exactly.",
+            "It plans an order such as “bag two salt bread rolls” as a repetition of find the product by camera → select the target → pick-and-place. Right before each bagging it checks that the target is still in the remaining order, so a product different from the order is not bagged. The task is complete only when what is in the bag matches the order exactly.",
             "“소금빵 2개 담아줘” 같은 주문을 camera로 상품 찾기 → 대상 선택 → pick-and-place의 반복으로 계획합니다. 담기 직전마다 대상이 남은 주문에 있는지 확인해, 주문과 다른 상품을 담지 않습니다. 봉투에 담긴 내용이 주문과 정확히 일치해야 작업이 끝난 것으로 봅니다.",
             "「塩パンを2個入れて」のような注文を、cameraで商品を探す → 対象を選ぶ → pick-and-place の繰り返しとして計画します。袋に入れる直前ごとに対象が残りの注文にあるかを確認し、注文と異なる商品を入れません。袋の中身が注文と正確に一致して初めて、作業の完了とします。")),
         ("p", L(
@@ -146,7 +146,7 @@ PAGE = {
             "요청마다 필수 조건(예: 제조가 끝난 뒤 배송, 적재 한도 준수)을 정합니다. plan과 실행 결과를 따로 채점합니다. 평가도 실제 운영과 같은 code 경로로 실행하고, 정답 조건은 planner에 주지 않습니다. 생성 단계에서 막힌 사례도 분모에서 빼지 않습니다. 이 부분은 팀원과 공동으로 개발했습니다.",
             "依頼ごとに必須条件（例：製造が終わってから配送、積載上限の順守）を定めます。planと実行結果を別々に採点します。評価も実際の運用と同じcode経路で実行し、正解条件はplannerに与えません。生成の段階で止まった事例も分母から外しません。この部分はチームメンバーと共同で開発しました。")),
 
-        ("h3", L("Where rules stop", "규칙이 끝나는 지점", "ルールが及ばなくなる地点"), None),
+        ("h3", L("Where rules stop", "규칙이 끝나는 지점", "ルールの限界"), None),
         ("table",
          [L("Class", "분류", "分類"), L("Situations", "상황", "状況"), L("Example", "예", "例")],
          [
@@ -154,16 +154,16 @@ PAGE = {
               L("A menu item, something not on the menu, something that may be given for free", "있는 메뉴, 없는 메뉴, 무료로 줄 수 있는 것", "メニューにあるもの、ないもの、無料で提供できるもの"),
               L("Ice water", "얼음물", "氷水")],
              [L("2. A single anomaly", "2. 이상 상황 단독", "2. 単独の異常"),
-              L("Failed grip, failed dispensing, a spill while serving, a person approaching, a drink left on the shelf", "컵 그립 실패, 음료 추출 실패, 서빙 중 쏟아짐, 사람 접근, 방치 음료", "把持の失敗、抽出の失敗、提供中のこぼれ、人の接近、放置されたドリンク"),
-              L("Failed grip → the cup is dispensed again", "그립 실패 → 컵을 다시 추출", "把持の失敗 → カップを再度抽出")],
+              L("Failed grip, failed dispensing, a spill while serving, a person approaching, an uncollected drink", "컵 그립 실패, 음료 추출 실패, 서빙 중 쏟아짐, 사람 접근, 방치 음료", "把持の失敗、抽出の失敗、提供中のこぼれ、人の接近、放置されたドリンク"),
+              L("Failed grip → the cup is dispensed again", "그립 실패 → 컵을 다시 추출", "把持の失敗 → カップを再度払い出す")],
              [L("3. Composite situations", "3. 복합 상황", "3. 複合的な状況"),
               L("Custom drinks, priority between handling an incident and continuing operation, several problems at once", "커스텀 메뉴, 사고 처리와 운영 사이의 우선순위, 여러 문제의 동시 발생", "カスタムメニュー、事故対応と運用の優先順位、複数の問題の同時発生"),
               L("After a spill: remake first or clean first? It depends on how many slots are free and whether orders are waiting.", "쏟아진 뒤 재제조가 먼저인가 청소가 먼저인가. 빈 칸의 수와 대기 주문의 유무에 따라 달라짐", "こぼれた後、再製造が先か清掃が先か。空いている区画の数と待ち注文の有無によって変わる")],
          ], {"first_bold": True}),
         ("p", L(
-            "Classes 1 and 2 can be written as rules. Class 3 is the reason the agent exists: as the combinations grow, they can no longer be written as rules.",
-            "1번과 2번은 규칙으로 쓸 수 있습니다. 3번이 agent가 있는 이유입니다. 조합이 늘면 규칙으로 쓸 수 없습니다.",
-            "1と2はルールとして書けます。3がagentの存在理由です。組み合わせが増えると、ルールでは書けなくなります。")),
+            "As situations combine, the cases can no longer be written out as rules. Class 3 is that point.",
+            "상황이 조합되면 경우를 규칙으로 다 쓸 수 없습니다. 3번이 그 지점입니다.",
+            "状況が組み合わさると、場合をルールとして書ききれなくなります。3がその地点です。")),
 
         ("h2", "decisions"),
         ("table", T_DECISION, [
@@ -174,7 +174,7 @@ PAGE = {
              L("Feasibility depends on the current state, not on the text of the plan.", "수행 가능 여부는 plan의 글이 아니라 현재 상태에 달려 있음", "実行可能かどうかは、planの文面ではなく現在の状態で決まる"),
              L("A plan that reads well and cannot be carried out.", "글로는 맞지만 수행할 수 없는 plan", "文面は正しいが実行できないplan")],
             [L("Completion is confirmed by observation.", "완료를 observation으로 확인", "完了をobservationで確認する"),
-             L("A success response describes the motion, not the outcome.", "성공 응답은 동작에 대한 것이고 결과에 대한 것이 아님", "成功応答は動作についてのものであり、結果についてのものではない"),
+             L("A success response describes the motion, not the outcome.", "성공 응답은 동작이 끝났다는 뜻이지, 결과가 맞다는 뜻이 아님", "成功応答は動作が終わったという意味であり、結果が正しいという意味ではない"),
              L("Continuing a plan on a step that did not actually succeed.", "실제로는 성공하지 않은 단계 위에서 plan을 이어 가는 것", "実際には成功していないステップの上で、planを続けること")],
             [L("Rules are given as constraints, not as a fixed sequence.", "규칙을 고정된 순서가 아니라 제약으로 줌", "ルールを固定の手順ではなく制約として与える"),
              L("A fixed sequence cannot cover requests outside the menu.", "고정된 순서로는 메뉴 밖의 요청을 다룰 수 없음", "固定の手順では、メニュー外の要望を扱えない"),
@@ -207,18 +207,18 @@ PAGE = {
         ("scenario", {
             "title": L("A step fails during making", "제조 중에 한 단계가 실패", "製造中に1つのステップが失敗"),
             "status": ["op_inhouse"],
-            "request": L("A cup is dispensed, and the gripper camera shows that the cup is not held.", "컵을 추출했는데, gripper camera에서 컵이 잡히지 않은 것으로 보임", "カップを抽出したが、gripper cameraではカップが把持されていない"),
+            "request": L("A cup is dispensed, and the gripper camera shows that the cup is not held.", "컵을 추출했는데, gripper camera에서 컵이 잡히지 않은 것으로 보임", "カップを払い出したが、gripper cameraではカップが把持されていない"),
             "strip": [
-                (L("Cup dispensing", "컵 추출", "カップの抽出"), None, None),
+                (L("Cup dispensing", "컵 추출", "カップの払い出し"), None, None),
                 (L("Grip check fails", "그립 확인 실패", "把持確認の失敗"), None, "fail"),
-                (L("Replanning", "재계획", "再計画"), L("from cup dispensing", "컵 추출부터", "カップの抽出から"), "judge"),
-                (L("Cup dispensed again", "컵 재추출", "カップを再度抽出"), None, None),
+                (L("Replanning", "재계획", "再計画"), L("from cup dispensing", "컵 추출부터", "カップの払い出しから"), "judge"),
+                (L("Cup dispensed again", "컵 재추출", "カップを再度払い出し"), None, None),
                 (L("Making continues", "제조 계속", "製造を続行"), None, None),
             ],
             "head": SC_HEAD,
             "rows": [
                 (L("Failure", "실패", "失敗"), L("The observation after the skill shows that the cup is not held, although the skill itself was executed.", "skill은 실행됐지만, 그 뒤의 observation에서 컵이 잡히지 않은 것으로 확인됨", "skill自体は実行されたが、その後のobservationでカップが把持されていないと確認される")),
-                (L("Replanning", "재계획", "再計画"), L("The Task Planner rebuilds the remaining plan, starting again from cup dispensing.", "Task Planner가 컵 추출부터 남은 계획을 다시 만듦", "Task Plannerが、カップの抽出から残りの計画を作り直す")),
+                (L("Replanning", "재계획", "再計画"), L("The Task Planner rebuilds the remaining plan, starting again from cup dispensing.", "Task Planner가 컵 추출부터 남은 계획을 다시 만듦", "Task Plannerが、カップの払い出しから残りの計画を作り直す")),
                 (L("Repeated failure", "반복 실패", "繰り返しの失敗"), L("When the same channel keeps failing, it is marked unavailable and another channel is used.", "같은 채널이 계속 실패하면 사용 불가로 표시하고 다른 채널을 사용", "同じチャンネルが失敗し続ける場合は使用不可とし、別のチャンネルを使う")),
             ],
             "note": None,
@@ -229,35 +229,16 @@ PAGE = {
             "request": L("One request is for ice water. Another is for a drink with an extra shot.", "한 요청은 얼음물이고, 다른 요청은 샷을 추가한 음료임", "ある依頼は氷水、別の依頼はショットを追加したドリンク"),
             "strip": [
                 (L("Request", "요청", "依頼"), None, None),
-                (L("Judgment", "판단", "判断"), L("may this be provided?", "제공해도 되는가", "提供してよいか"), "judge"),
+                (L("Decision", "판단", "判断"), L("may this be provided?", "제공해도 되는가", "提供してよいか"), "judge"),
                 ("Task Planner (LLM)", L("composes existing skills", "기존 skill을 조합", "既存のskillを組み合わせる"), None),
                 ("Plan Validator", None, "judge"),
                 (L("Making", "제조", "製造"), None, None),
             ],
             "head": SC_HEAD,
             "rows": [
-                (L("Judgment", "판단", "判断"), L("Ice water is not a menu item, and it may be given. A free drink may not.", "얼음물은 판매 메뉴가 아니지만 제공할 수 있음. 무료 음료는 제공하지 않음", "氷水は販売メニューではないが提供できる。無料のドリンクは提供しない")),
+                (L("Decision", "판단", "判断"), L("Ice water is not on the menu but may be served. A menu drink may not be given away for free.", "얼음물은 판매 메뉴가 아니지만 제공할 수 있음. 판매 메뉴의 음료는 무료로 제공하지 않음", "氷水は販売メニューではないが提供できる。販売メニューのドリンクは無料では提供しない")),
                 (L("Planning", "계획", "計画"), L("A fixed making sequence does not cover these requests. The planner composes the existing skills within the constraints.", "고정된 제조 순서로는 이 요청을 다룰 수 없음. planner가 제약 안에서 기존 skill을 조합", "固定の製造手順ではこれらの要望を扱えない。plannerが制約の中で既存のskillを組み合わせる")),
                 (L("Validation and execution", "검증과 실행", "検証と実行"), L("The plan passes the same validation as any other plan before it is executed.", "다른 plan과 같은 검증을 통과한 뒤 실행", "ほかのplanと同じ検証を通過してから実行")),
-            ],
-            "note": None,
-        }),
-        ("scenario", {
-            "title": L("Bagging bread with two arms", "양팔로 빵 담기", "両腕でのパンの袋詰め"),
-            "status": ["test"],
-            "request": L("“Bag two salt breads.”", "“소금빵 2개 담아줘.”", "「塩パンを2個入れて」"),
-            "strip": [
-                (L("Order", "주문", "注文"), None, None),
-                (L("Find and select", "찾기와 선택", "探索と選択"), L("camera", "camera", "camera"), None),
-                (L("Check", "확인", "確認"), L("still in the remaining order?", "남은 주문에 있는가", "残りの注文にあるか"), "judge"),
-                (L("Policy · VLA", "Policy · VLA", "Policy · VLA"), L("pick with both arms, bag", "양팔로 집어 담기", "両腕で把持して袋に入れる"), None),
-                (L("Repeat", "반복", "繰り返し"), L("until the bag matches the order", "봉투가 주문과 일치할 때까지", "袋の中身が注文と一致するまで"), None),
-            ],
-            "head": SC_HEAD,
-            "rows": [
-                (TPA_SEMI, L("Plans the order as a repetition of find the product by camera → select the target → pick-and-place.", "주문을 camera로 상품 찾기 → 대상 선택 → pick-and-place의 반복으로 계획", "注文を、cameraで商品を探す → 対象を選ぶ → pick-and-place の繰り返しとして計画")),
-                ("Manipulation policy · VLA", L("Called with an instruction text and an image in which everything except the target is masked.", "대상 외 영역을 가린 image와 지시문으로 호출", "対象以外の領域を隠したimageと指示文で呼び出す")),
-                (L("On failure", "실패하면", "失敗した場合"), L("Failed grasp: retry. Dropped: search again. Out of stock: replan the remaining order or call a person.", "잡기 실패: 재시도. 놓침: 다시 검색. 재고 없음: 남은 주문을 재계획하거나 사람을 호출", "把持の失敗：再試行。落下：再検索。在庫なし：残りの注文を再計画するか人を呼ぶ")),
             ],
             "note": None,
         }),
@@ -276,14 +257,14 @@ PAGE = {
             [SC_TEAM, L("Specifications such as the definition of robot skills.",
                         "로봇 skill 정의 등의 명세.",
                         "ロボットのskill定義などの仕様。")],
-            [SC_OUT, L("The navigation system of the delivery and cleaning robots. Here they are only targets of commands.",
-                       "배송 로봇과 청소 로봇의 주행 시스템. 여기서는 명령의 대상일 뿐입니다.",
-                       "配送ロボットと清掃ロボットの走行システム。ここでは指示の対象にとどまります。")],
+            [SC_OUT, L("The navigation system of the delivery and cleaning robots. Here they only receive commands.",
+                       "배송 로봇과 청소 로봇의 주행 시스템. 여기서는 명령을 받기만 합니다.",
+                       "配送ロボットと清掃ロボットの走行システム。ここでは指示を受けるだけです。")],
         ], {"first_bold": True}),
 
         ("h2", "links"),
         ("links", [
-            ("anomaly-detection", L("The VLM's result is the trigger for dispatching the cleaning robot and, in testing, for the agent's judgment of response order.",
+            ("anomaly-detection", L("The VLM's result is the trigger for dispatching the cleaning robot and, in testing, for the agent's decision on response order.",
                                     "VLM의 결과가 청소 로봇을 보내는 계기가 되고, 테스트 단계에서는 agent가 대응 순서를 판단하는 계기가 됩니다.",
                                     "VLMの結果が、清掃ロボットを向かわせるきっかけとなり、テスト段階ではagentが対応順序を判断するきっかけになります。")),
             ("manipulation-learning", L("The manipulation policy and the VLA that the semi-humanoid agent calls.",

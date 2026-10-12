@@ -23,7 +23,7 @@ TITLE = "Physical AI / Robot Intelligence Systems Engineer"
 # Status labels. "op" and "op_inhouse" are shown in bold.
 STATUS = {
     "op": L("In operation", "운영", "運用中"),
-    "op_stores": L("In operation at 40+ stores", "40여 개 매장 운영", "40以上の店舗で運用中"),
+    "op_stores": L("In operation at 40+ stores", "40여 개 매장 운영", "40店舗以上で運用中"),
     "op_direct": L("In operation at company-run stores", "직영 매장에서 운영", "直営店舗で運用中"),
     "op_inhouse": L("In operation (in-house)", "운영 (사내)", "運用中（社内）"),
     "test": L("Real-robot testing", "실로봇 테스트", "実機テスト"),
@@ -35,9 +35,9 @@ STATUS = {
 OP_KEYS = {"op", "op_stores", "op_direct", "op_inhouse"}
 
 STATUS_LEGEND = L(
-    "In operation: running in stores. In operation (in-house): serving employees inside the company building. Real-robot testing: before live service.",
-    "운영: 매장에서 동작. 운영 (사내): 회사 건물 안 직원 대상. 실로봇 테스트: 실서비스 전.",
-    "運用中：店舗で稼働。運用中（社内）：社屋内の社員向け。実機テスト：実サービス前。",
+    "In operation: running in stores. The label says so when it means 40+ stores or company-run stores only. In operation (in-house): serving employees inside the company building. Real-robot testing: running on the real robot, before live service. Simulation: run in simulation only. Previously in operation: used in a store service that has ended. Ongoing: work that continues, such as data collection.",
+    "운영: 매장에서 동작. 40여 개 매장인지 직영 매장인지는 표기에 적습니다. 운영 (사내): 회사 건물 안 직원 대상. 실로봇 테스트: 실로봇에서 동작, 실서비스 전. 시뮬레이션: simulation에서만 실행. 과거 운영: 지금은 끝난 매장 서비스에서 사용. 진행 중: 데이터 수집처럼 계속하는 작업.",
+    "運用中：店舗で稼働。40店舗以上か直営店舗のみかは表記に示します。運用中（社内）：社屋内の社員向け。実機テスト：実機で動作、実サービス前。シミュレーション：simulation上でのみ実行。過去に運用：現在は終了した店舗サービスで使用。進行中：データ収集のように継続している作業。",
 )
 
 UI = {
@@ -50,8 +50,8 @@ UI = {
     "scale": L("Scale", "규모", "規模"),
     "prev": L("Previous", "이전", "前へ"),
     "next": L("Next", "다음", "次へ"),
-    "read": L("Read", "읽기", "読む"),
-    "legend_judge": L("Judgment", "판단", "判断"),
+    "read": L("Read Project {n} →", "Project {n} 자세히 보기 →", "Project {n}の詳細を見る →"),
+    "legend_judge": L("Decision point", "판단", "判断"),
     "legend_fail": L("Failure or return path", "실패 또는 되돌아가는 경로", "失敗または戻る経路"),
     "on_this_page": L("On this page", "이 페이지의 내용", "このページの内容"),
     "request": L("Situation", "상황", "状況"),
@@ -67,18 +67,18 @@ PROJECTS = [
         "period": L("2023.10 – present", "2023.10 - 현재", "2023.10 - 現在"),
         "scale": ["op_stores"],
         "summary": L(
-            "In a store with no staff, cameras judge the pickup shelf and every cup, a VLM handles irregular situations, and the runtime and its models are updated remotely across 40+ stores.",
-            "직원이 없는 매장에서 camera가 픽업 선반과 컵 한 잔 한 잔을 판단하고, VLM이 비정형 상황을 맡고, 40여 개 매장의 runtime과 모델을 원격으로 갱신합니다.",
-            "スタッフのいない店舗で、cameraがピックアップ棚とカップ1杯ごとを判断し、VLMが非定型の状況を担当し、40以上の店舗のruntimeとモデルを遠隔で更新します。",
+            "In a store with no staff, cameras determine the state of the pickup shelf and of every cup, a VLM recognizes anomalies, and the runtime and its models are updated remotely across 40+ stores.",
+            "직원이 없는 매장에서 camera로 픽업 선반과 컵 하나하나의 상태를 판단하고, VLM이 이상 상황을 인식하고, 40여 개 매장의 runtime과 모델을 원격으로 갱신합니다.",
+            "スタッフのいない店舗で、cameraでピックアップ棚とカップ一つひとつの状態を判断し、VLMが異常を認識し、40店舗以上のruntimeとモデルを遠隔で更新します。",
         ),
         "pages": [
             ("perception-runtime", "Perception Runtime", L(
-                "Which slot is empty, whether the drink is right, whether the customer took it.",
+                "Which slot is empty, whether the drink came out correctly, whether the customer took it.",
                 "어느 칸이 비었는지, 음료가 제대로 나왔는지, 고객이 가져갔는지.",
-                "どの区画が空いているか、ドリンクが正しいか、お客様が受け取ったか。")),
+                "どの区画が空いているか、ドリンクが正しく出たか、お客様が受け取ったか。")),
             ("anomaly-detection", "VLM Anomaly Detection", L(
-                "12+ irregular situations: the robot recovers, or a person is called.",
-                "12종 이상의 이상 상황: 로봇이 복구하거나 사람을 부릅니다.",
+                "12+ kinds of anomalies: the robot recovers, or a person is called.",
+                "이상 상황 12종 이상: 로봇이 복구하거나 사람을 부릅니다.",
                 "12種類以上の異常：ロボットが復旧するか、人を呼びます。")),
             ("deployment", "Deployment & Model Update", L(
                 "OTA, MLOps pipeline, commissioning of a new store.",
@@ -94,9 +94,9 @@ PROJECTS = [
         "scale": None,
         "scale_text": L("4 robot types · 3 agents", "로봇 4종 · agent 3개", "ロボット4種 · agent 3つ"),
         "summary": L(
-            "The LLM plans and code validates. Each robot has its own agent, and an Orchestrator ties four robot types together.",
-            "LLM이 계획하고 code가 검증합니다. 로봇마다 agent를 두고 Orchestrator가 로봇 4종을 묶습니다.",
-            "LLMが計画し、codeが検証します。ロボットごとにagentを置き、Orchestratorが4種のロボットをまとめます。",
+            "The LLM plans and code validates. The beverage-making robot and the semi-humanoid robot each have a Task Planning Agent, the delivery and cleaning robots are called as tools, and an Orchestrator Agent ties the four robot types together.",
+            "LLM이 계획하고 code가 검증합니다. 음료 제조 로봇과 세미 휴머노이드 로봇에는 Task Planning Agent를 두고, 배송 로봇과 청소 로봇은 tool로 호출합니다. Orchestrator Agent가 로봇 4종을 묶습니다.",
+            "LLMが計画し、codeが検証します。ドリンク製造ロボットとセミヒューマノイドロボットにはTask Planning Agentを置き、配送ロボットと清掃ロボットはtoolとして呼び出します。Orchestrator Agentが4種のロボットをまとめます。",
         ),
         "pages": [("agent-system", "Heterogeneous Multi-Robot Agent System", None)],
     },
@@ -109,7 +109,7 @@ PROJECTS = [
         "summary": L(
             "Motions that fixed sequences cannot do are learned from teleoperation data, from demonstration collection to operation in stores.",
             "정해진 동작으로 할 수 없는 일을 teleoperation 데이터로 학습합니다. 데모 수집부터 매장 운영까지 이었습니다.",
-            "決まった動作ではできない作業を、teleoperationのデータから学習します。デモ収集から店舗での運用までをつなぎました。",
+            "決まった動作ではできない作業を、teleoperationのデータから学習させます。デモ収集から店舗での運用までをつなぎました。",
         ),
         "pages": [("manipulation-learning", "Teleoperation & Manipulation Learning", None)],
     },
@@ -123,14 +123,14 @@ H = {
     "problem": L("The problem", "문제", "課題"),
     "structure": L("Structure", "구조", "構成"),
     "how": L("How it works", "동작", "仕組み"),
-    "decisions": L("Design decisions", "설계 판단", "設計上の判断"),
+    "decisions": L("Design choices", "설계 결정", "設計上の決定"),
     "case": L("One case, start to end", "한 건을 끝까지 따라가기", "1件を最後まで追う"),
     "scope": L("Scope", "범위", "範囲"),
     "links": L("Connected projects", "연결된 프로젝트", "関連プロジェクト"),
 }
 
-T_DECISION = [L("Decision", "판단", "判断"), L("Reason", "이유", "理由"), L("What it prevents", "막는 문제", "防ぐ問題")]
-T_CASE = [L("Event", "사건", "出来事"), L("Observation", "관측", "観測"), L("Judgment", "판단", "判断"), L("Result", "결과", "結果")]
+T_DECISION = [L("Choice", "결정", "決定"), L("Reason", "이유", "理由"), L("What it prevents", "막는 문제", "防ぐ問題")]
+T_CASE = [L("Event", "사건", "出来事"), L("Observation", "관측", "観測"), L("Decision", "판단", "判断"), L("Result", "결과", "結果")]
 T_SCOPE = [L("Item", "항목", "項目"), L("Content", "내용", "内容")]
 SC_STATUS = L("Status", "상태", "状態")
 SC_MINE = L("Built by me", "직접 한 것", "自分で行ったこと")

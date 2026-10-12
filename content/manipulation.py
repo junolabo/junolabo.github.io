@@ -8,12 +8,12 @@ PAGE = {
     "claim": L(
         "Only the part that a fixed motion cannot do is learned. The work covers the whole path: teleoperation, demonstration data, policy training, real-robot testing, and operation in stores.",
         "정해진 동작으로 할 수 없는 부분만 학습합니다. teleoperation, 데모 데이터, policy 학습, 실로봇 테스트, 매장 운영까지 전 과정을 다뤘습니다.",
-        "決まった動作ではできない部分だけを学習します。teleoperation、デモデータ、policyの学習、実機テスト、店舗での運用まで、全過程を扱いました。",
+        "決まった動作ではできない部分だけを学習させます。teleoperation、デモデータ、policyの学習、実機テスト、店舗での運用まで、全過程を扱いました。",
     ),
     "facts": [
         ("role", L("Teleoperation code and policy training", "teleoperation code·policy 학습 담당", "teleoperationのcodeとpolicyの学習を担当")),
         ("period", L("2024.11 – present", "2024.11 - 현재", "2024.11 - 現在")),
-        ("status", ("st", ["op", "test"])),
+        ("status", ("st", ["op_direct", "test"])),
     ],
     "blocks": [
         ("h2", "problem"),
@@ -46,21 +46,21 @@ PAGE = {
             (L("Demonstration collection", "데모 수집", "デモ収集"), L("image, state, action, time-aligned", "image, state, action을 시간 정렬", "image、state、actionを時刻同期"), None),
             ("Episode dataset", "HDF5", None),
             (L("Policy training", "Policy 학습", "Policyの学習"), L("Diffusion Policy family, PPO", "Diffusion Policy 계열, PPO", "Diffusion Policy系、PPO"), None),
-            (L("Real-robot testing", "실로봇 테스트", "実機テスト"), None, "judge"),
+            (L("Real-robot testing", "실로봇 테스트", "実機テスト"), None, None),
             (L("Operation", "운영", "運用"), L("called as a skill", "skill로 호출", "skillとして呼び出す"), None),
         ], L(
             "A learned policy sits in the Execution layer next to the fixed skills.",
             "학습한 policy는 Execution 계층에서 정해진 skill과 나란히 있습니다.",
-            "学習したpolicyは、Execution階層で決まったskillと並んでいます。")),
+            "学習済みのpolicyは、Execution階層で決まったskillと並んでいます。")),
         ("table",
          [L("Task", "작업", "作業"), L("Done by fixed motion", "정해진 동작으로 한 부분", "決まった動作で行う部分"),
-          L("Learned", "학습한 부분", "学習した部分"), L("Policy input", "Policy의 입력", "Policyの入力"), L("Status", "상태", "状態")],
+          L("Learned", "학습한 부분", "学習させた部分"), L("Policy input", "Policy의 입력", "Policyの入力"), L("Status", "상태", "状態")],
          [
              [L("Clearing trash from the shelf", "선반 위 쓰레기 치우기", "棚の上のゴミの片付け"),
               L("Approach to the position found by the ceiling camera. Drop at the disposal position.", "천장 camera로 찾은 위치까지의 접근. 폐기 위치에 버리기", "天井cameraで見つけた位置までの接近。廃棄位置に捨てる"),
               L("The grasp", "집는 동작", "把持"),
               L("Live gripper-camera image", "실시간 gripper camera image", "リアルタイムのgripper camera image"),
-              ("st", ["op"])],
+              ("st", ["op_direct"])],
              [L("Bagging bread", "빵 담기", "パンの袋詰め"),
               L("Finding the product and choosing the target, planned by the Task Planning Agent", "상품 찾기와 대상 선택. Task Planning Agent가 계획", "商品の探索と対象の選択。Task Planning Agentが計画"),
               L("Picking with both arms and bagging", "양팔로 집어 봉투에 담기", "両腕で把持して袋に入れる"),
@@ -84,15 +84,15 @@ PAGE = {
             "데모 중에 camera image, 로봇 state, action을 기록하고 시간을 맞춥니다. 데모 하나를 HDF5의 episode 하나로 저장합니다. 이 dataset을 policy 학습에 씁니다.",
             "デモの間、camera image、ロボットのstate、actionを記録し、時刻を合わせます。デモ1件をHDF5のepisode 1件として保存します。このdatasetをpolicyの学習に使います。")),
 
-        ("h3", "Manipulation policy (single-arm)", ["op"]),
+        ("h3", "Manipulation policy (single-arm)", ["op_direct"]),
         ("p", L(
-            "The beverage-making robot clears trash from the pickup shelf. Only the grasp is learned. The arm first approaches the position found by the ceiling camera. From there, a policy that I trained takes the live gripper-camera image and picks the object up. Dropping it at the disposal position is a fixed motion again. In operation at company-run stores.",
-            "음료 제조 로봇이 픽업 선반 위의 쓰레기를 치웁니다. 집는 동작만 학습했습니다. 로봇팔은 먼저 천장 camera로 찾은 위치 근처까지 접근합니다. 거기서부터는 직접 학습한 policy가 실시간 gripper camera image를 받아 물체를 집습니다. 폐기 위치에 버리는 동작은 다시 정해진 동작입니다. 직영 매장에서 운영하고 있습니다.",
-            "ドリンク製造ロボットがピックアップ棚の上のゴミを片付けます。学習したのは把持だけです。ロボットアームはまず、天井cameraで見つけた位置の近くまで接近します。そこからは、自ら学習したpolicyがリアルタイムのgripper camera imageを受け取り、物体を把持します。廃棄位置に捨てる動作は、再び決まった動作です。直営店舗で運用しています。")),
+            "The beverage-making robot clears trash from the pickup shelf. Only the grasp is learned. The arm first approaches the position found by the ceiling camera. From there, a policy that I trained takes the live gripper-camera image and picks the object up. Dropping it at the disposal position is a fixed motion again.",
+            "음료 제조 로봇이 픽업 선반 위의 쓰레기를 치웁니다. 집는 동작만 학습했습니다. 로봇팔은 먼저 천장 camera로 찾은 위치 근처까지 접근합니다. 거기서부터는 직접 학습한 policy가 실시간 gripper camera image를 받아 물체를 집습니다. 폐기 위치에 버리는 동작은 다시 정해진 동작입니다.",
+            "ドリンク製造ロボットがピックアップ棚の上のゴミを片付けます。学習させたのは把持だけです。ロボットアームはまず、天井cameraで見つけた位置の近くまで接近します。そこからは、自分で学習させたpolicyがリアルタイムのgripper camera imageを受け取り、物体を把持します。廃棄位置に捨てる動作は、再び決まった動作です。")),
         ("flow", L("Clearing one piece of trash", "쓰레기 하나 치우기", "ゴミ1つの片付け"), [
             (L("Ceiling camera", "천장 camera", "天井camera"), L("finds the position", "위치를 찾음", "位置を見つける"), None),
             (L("Approach", "접근", "接近"), L("fixed motion, to near that position", "정해진 동작, 그 위치 근처까지", "決まった動作、その位置の近くまで"), None),
-            (L("Grasp", "집기", "把持"), L("learned policy, live gripper-camera image", "학습한 policy, 실시간 gripper camera image", "学習したpolicy、リアルタイムのgripper camera image"), "judge"),
+            (L("Grasp", "집기", "把持"), L("learned policy, live gripper-camera image", "학습한 policy, 실시간 gripper camera image", "学習済みのpolicy、リアルタイムのgripper camera image"), None),
             (L("Dispose", "폐기", "廃棄"), L("fixed motion, to the disposal position", "정해진 동작, 폐기 위치로", "決まった動作、廃棄位置へ"), None),
         ], None),
 
@@ -100,13 +100,13 @@ PAGE = {
         ("p", L(
             "The semi-humanoid robot picks up packaged bread with both arms and puts it in a bag. I trained a policy of the Diffusion Policy family. A teammate trained a VLA for the same task. I connected the Task Planning Agent so that it calls this policy and the VLA with an instruction text and an image in which everything except the target is masked.",
             "세미 휴머노이드 로봇이 포장된 빵을 양팔로 집어 봉투에 담습니다. Diffusion Policy 계열 policy를 직접 학습했습니다. 같은 작업에 대해 팀원이 VLA를 학습했습니다. Task Planning Agent가 대상 외 영역을 가린 image와 지시문으로 이 policy와 VLA를 호출하도록 연결했습니다.",
-            "セミヒューマノイドロボットが包装されたパンを両腕で把持して袋に入れます。Diffusion Policy系のpolicyを自ら学習しました。同じ作業について、チームメンバーがVLAを学習しました。Task Planning Agentが、対象以外の領域を隠したimageと指示文で、このpolicyとVLAを呼び出すように接続しました。")),
+            "セミヒューマノイドロボットが包装されたパンを両腕で把持して袋に入れます。Diffusion Policy系のpolicyを自分で学習させました。同じ作業について、チームメンバーがVLAを学習させました。Task Planning Agentが、対象以外の領域を隠したimageと指示文で、このpolicyとVLAを呼び出すように接続しました。")),
 
         ("h3", "Drip coffee", ["past"]),
         ("p", L(
             "I developed this alone. Drip-coffee making was split into segments, and the learning method was chosen for each segment. Pouring water was a much more complex task than the other two, so it was learned with reinforcement learning.",
             "혼자 개발했습니다. 드립 커피 제조를 구간으로 나누고, 구간마다 학습 방법을 골랐습니다. 물 붓기는 다른 두 구간보다 훨씬 복잡한 작업이어서 강화학습으로 학습했습니다.",
-            "単独で開発しました。ドリップコーヒーの製造を区間に分け、区間ごとに学習方法を選びました。湯注ぎはほかの2つの区間よりはるかに複雑な作業だったため、強化学習で学習しました。")),
+            "単独で開発しました。ドリップコーヒーの製造を区間に分け、区間ごとに学習方法を選びました。湯注ぎはほかの2つの区間よりはるかに複雑な作業だったため、強化学習で学習させました。")),
         ("table",
          [L("Segment", "구간", "区間"), L("Method", "방법", "方法"), L("How", "방식", "進め方")],
          [
@@ -115,7 +115,7 @@ PAGE = {
              [L("Placing the filter", "필터 놓기", "フィルターの設置"), "Diffusion Policy (IL)",
               L("Learned from teleoperation demonstrations", "teleoperation 데모로 학습", "teleoperationのデモから学習")],
              [L("Pouring water", "물 붓기", "湯注ぎ"), "PPO (RL)",
-              L("Trained in simulation (MuJoCo), then tuned on the real robot", "simulation(MuJoCo)에서 학습한 뒤 실로봇에서 조정", "simulation（MuJoCo）で学習した後、実機で調整")],
+              L("Trained in simulation (MuJoCo), then tuned on the real robot", "simulation(MuJoCo)에서 학습한 뒤 실로봇에서 조정", "simulation（MuJoCo）で学習させた後、実機で調整")],
          ], {"first_bold": True}),
         ("p", L(
             "The reward for pouring included posture alignment, smoothness of motion, avoidance of joint limits, and early termination when there was a risk of spilling. On the robot, policy actions at 30 Hz were interpolated and executed as 100 Hz pose commands. After real-robot evaluation, the policies were used in a store service. That service is no longer offered.",
@@ -124,9 +124,9 @@ PAGE = {
 
         ("h2", "decisions"),
         ("table", T_DECISION, [
-            [L("Only the part that a fixed motion cannot do is learned.", "정해진 동작으로 안 되는 부분만 학습", "決まった動作ではできない部分だけを学習する"),
+            [L("Only the part that a fixed motion cannot do is learned.", "정해진 동작으로 안 되는 부분만 학습", "決まった動作ではできない部分だけを学習させる"),
              L("Approach and disposal go to known positions. Only the grasp depends on the shape of the object.", "접근과 폐기는 정해진 위치로 감. 집는 동작만 물체의 모양에 좌우됨", "接近と廃棄は決まった位置に向かう。把持だけが物体の形に左右される"),
-             L("Learning a whole task when one part needs it.", "한 부분만 필요한데 작업 전체를 학습하는 것", "一部だけが必要なのに、作業全体を学習すること")],
+             L("Learning a whole task when one part needs it.", "한 부분만 필요한데 작업 전체를 학습하는 것", "一部だけが必要なのに、作業全体を学習させること")],
             [L("A task is split into segments, and each segment gets its own method.", "작업을 구간으로 나누고 구간마다 방법을 고름", "作業を区間に分け、区間ごとに方法を選ぶ"),
              L("Pouring is much more complex than grasping and placing.", "물 붓기는 잡기와 놓기보다 훨씬 복잡함", "湯注ぎは把持や設置よりはるかに複雑"),
              L("Forcing one method on every segment.", "모든 구간에 한 가지 방법을 쓰는 것", "すべての区間にひとつの方法を当てはめること")],

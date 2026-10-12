@@ -38,6 +38,7 @@ class Site:
     def __init__(self, lang, prefix):
         self.lang = lang
         self.prefix = prefix
+        self.legend_seen = set()
 
     # ---- small helpers
     def t(self, x):
@@ -117,6 +118,9 @@ class Site:
 
     # ---- diagrams
     def legend(self, kinds):
+        """Explains each tint the first time it appears on a page."""
+        kinds = set(kinds) - self.legend_seen
+        self.legend_seen |= kinds
         items = []
         if "judge" in kinds:
             items.append(f'<span><i class="k-judge"></i>{self.e(C.UI["legend_judge"])}</span>')
@@ -125,13 +129,14 @@ class Site:
         return f'<p class="legend">{"".join(items)}</p>' if items else ""
 
     def flow_list(self, steps, cls="flow"):
-        items = []
-        for title, sub, kind in steps:
-            sub_html = f"<span>{self.e(sub)}</span>" if sub else ""
-            k = f' class="k-{kind}"' if kind else ""
-            items.append(f"<li{k}><strong>{self.e(title)}</strong>{sub_html}</li>")
         n = len(steps)
         cols = {5: 5, 6: 3, 7: 4, 8: 4}.get(n, min(n, 4))
+        items = []
+        for i, (title, sub, kind) in enumerate(steps):
+            sub_html = f"<span>{self.e(sub)}</span>" if sub else ""
+            classes = ([f"k-{kind}"] if kind else []) + (["row-end"] if (i + 1) % cols == 0 and i + 1 < n else [])
+            k = f' class="{" ".join(classes)}"' if classes else ""
+            items.append(f"<li{k}><strong>{self.e(title)}</strong>{sub_html}</li>")
         return f'<ol class="{cls}" style="--cols:{cols}">' + "".join(items) + "</ol>"
 
     def flow(self, caption, steps, note):
@@ -223,7 +228,7 @@ class Site:
             '<article class="scenario">'
             f'<div class="item-head"><h3>{self.e(d["title"])}</h3>{self.status(d["status"])}</div>'
             f"{request}"
-            f'{self.flow_list(d["strip"], "flow strip")}{self.legend(kinds)}'
+            f'{self.flow_list(d["strip"], "flow strip") if d["strip"] else ""}{self.legend(kinds)}'
             f'<table class="steps"><tbody>{rows}</tbody></table>'
             f"{note_html}"
             "</article>"
@@ -269,6 +274,7 @@ class Site:
     # ---- detail page
     def detail(self, page):
         slug = page["slug"]
+        self.legend_seen = set()
         proj, idx = project_of(slug)
         path = f"projects/{slug}/"
         n = len(proj["pages"])
@@ -337,7 +343,7 @@ class Site:
         out = [self.head(f"{self.t(C.NAME)} | {C.TITLE}", self.t(H.META_DESCRIPTION), "")]
         nav = "".join(
             f'<a href="#{i}">{label}</a>'
-            for i, label in (("system", "System"), ("projects", "Projects"), ("connections", "Connections"),
+            for i, label in (("projects", "Projects"), ("system", "System"), ("connections", "Connections"),
                              ("experience", "Experience"), ("skills", "Skills"), ("contact", "Contact"))
         )
         out.append(self.top(nav, ""))
@@ -356,26 +362,23 @@ class Site:
   </div>
   <img class="photo" src="/{C.PHOTO}" alt="{self.attr(C.NAME)}" width="487" height="684">
 </section>
-<section id="purpose">
-  <h2>{self.e(H.PURPOSE_TITLE)}</h2>
-  {"".join(f"<p>{self.e(p)}</p>" for p in H.PURPOSE)}
-</section>
 """)
 
         rows = []
         for layer, role, keys, pages in H.SYSTEM_MAP:
             links = "".join(f'<a href="{self.page_url(s)}">{label}</a>' for s, label in pages)
             rows.append(
-                f'<tr><th scope="row" data-label="Layer">{html.escape(layer)}</th>'
-                f'<td data-label="Role">{self.e(role)}</td>'
-                f'<td data-label="Status">{self.status(keys)}</td>'
+                f'<tr><th scope="row" data-label="{self.attr(H.SYSTEM_HEAD[0])}">{html.escape(layer)}</th>'
+                f'<td data-label="{self.attr(H.SYSTEM_HEAD[1])}">{self.e(role)}</td>'
+                f'<td data-label="{self.attr(H.SYSTEM_HEAD[2])}">{self.status(keys)}</td>'
                 f'<td data-label="{self.attr(H.SYSTEM_HEAD[3])}" class="go">{links}</td></tr>'
             )
-        out.append(f"""<section id="system">
+        system_html = (f"""<section id="system">
   <h2>{self.e(H.SYSTEM_TITLE)}</h2>
-  <p class="lead">{self.e(H.SYSTEM_INTRO)} {self.e(C.STATUS_LEGEND)}</p>
+  <p class="lead">{self.e(H.SYSTEM_INTRO)}</p>
   <table class="grid cols-4 map"><thead><tr>{"".join(f'<th scope="col">{self.e(h)}</th>' for h in H.SYSTEM_HEAD)}</tr></thead>
   <tbody>{"".join(rows)}</tbody></table>
+  <p class="note">{self.e(C.STATUS_LEGEND)}</p>
 </section>
 """)
 
@@ -395,7 +398,7 @@ class Site:
                 more = f'<ul class="links in-card">{items}</ul>'
             else:
                 s = p["pages"][0][0]
-                more = f'<p class="more"><a href="{self.page_url(s)}">{self.e(C.UI["read"])}: Project {p["no"]} →</a></p>'
+                more = f'<p class="more"><a href="{self.page_url(s)}">{html.escape(self.t(C.UI["read"]).format(n=p["no"]))}</a></p>'
             cards.append(
                 f'<article class="card" id="project-{p["no"]}">'
                 f'<p class="kicker">Project {p["no"]}</p>'
@@ -410,7 +413,11 @@ class Site:
   <p class="lead">{self.e(H.PROJECTS_INTRO)}</p>
   {"".join(cards)}
 </section>
-<section id="connections">
+<section id="purpose">
+  <h2>{self.e(H.PURPOSE_TITLE)}</h2>
+  {"".join(f"<p>{self.e(p)}</p>" for p in H.PURPOSE)}
+</section>
+{system_html}<section id="connections">
   <h2>{self.e(H.CONNECT_TITLE)}</h2>
   <p class="lead">{self.e(H.CONNECT_INTRO)}</p>
   {self.table(H.CONNECT_HEAD, [[a, b, ("st", k)] for a, b, k in H.CONNECTIONS], {"first_bold": True, "cls": "conn"})}

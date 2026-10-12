@@ -609,6 +609,19 @@ h2 + .item-head.sub {
   font-size: 15px;
 }
 
+/* The last box of a row continues on the next row. */
+@media (min-width: 761px) {
+  .flow li.row-end::after {
+    content: "↵";
+  }
+}
+
+@media (min-width: 561px) and (max-width: 760px) {
+  .flow li:nth-child(even)::after {
+    content: "↵";
+  }
+}
+
 .flow li:last-child::after {
   content: none;
 }

@@ -11,9 +11,9 @@ INTRO = [
     L("I design and build robot perception, LLM-based task planning, and learning-based manipulation as one connected system.",
       "로봇의 perception, LLM 기반 task planning, 학습 기반 manipulation을 하나로 이어지는 시스템으로 직접 설계하고 구현합니다.",
       "ロボットのperception、LLMによるtask planning、学習ベースのmanipulationを、ひとつにつながるシステムとして自ら設計・実装しています。"),
-    L("The system runs unmanned robot cafés. Perception and the single-arm manipulation policy are in operation in stores, and the agent system is in operation in-house.",
-      "이 시스템은 무인 로봇카페를 운영합니다. perception과 single-arm manipulation policy는 매장에서, agent 시스템은 사내에서 운영하고 있습니다.",
-      "このシステムは無人ロボットカフェを運営しています。perceptionとsingle-arm manipulation policyは店舗で、agentシステムは社内で運用しています。"),
+    L("I work at a robot service company that operates unmanned robot cafés in 40+ stores. As sole developer I built the perception runtime and the remote deployment system that run in those stores. I lead the LLM agent system, which is in operation in-house, and I trained the single-arm manipulation policy that is in operation at company-run stores.",
+      "무인 로봇카페를 40여 개 매장에서 운영하는 로봇 서비스 기업에서 일합니다. 그 매장에서 동작하는 perception runtime과 원격 배포 체계를 단독으로 개발했습니다. 사내에서 운영 중인 LLM agent 시스템은 Project Lead로 이끌고 있고, 직영 매장에서 운영 중인 single-arm manipulation policy를 직접 학습했습니다.",
+      "無人ロボットカフェを40店舗以上で運営するロボットサービス企業で働いています。その店舗で稼働するperception runtimeと遠隔デプロイの仕組みを単独で開発しました。社内で運用中のLLM agentシステムではProject Leadを務め、直営店舗で運用中のsingle-arm manipulation policyを自分で学習させました。"),
 ]
 
 LOCATION = "Seoul, Korea"
@@ -28,14 +28,14 @@ LANGUAGES = L(
 PURPOSE_TITLE = L("Why these projects exist", "이 프로젝트들이 필요했던 이유", "これらのプロジェクトが必要だった理由")
 PURPOSE = [
     L("The goal is to run a store with as little human involvement as possible. Two conditions followed from that goal.",
-      "목적은 매장을 최대한 자동화로 운영하는 것입니다. 이 목적에서 두 가지 조건이 나왔습니다.",
-      "目的は、店舗をできる限り自動で運営することです。この目的から2つの条件が生まれました。"),
-    L("First, irregular situations, and situations that used to need a person (a manager sent to the store, or an operator watching remotely), have to be handled by the robot as far as a robot can. Second, the store has to respond as flexibly as a staffed store.",
-      "첫째, 비정형 상황과 사람이 필요하던 상황(매장에 출동하던 관리자, 원격으로 지켜보던 운영 인력)을 로봇만으로 가능한 수준까지 대처해야 합니다. 둘째, 유인 매장처럼 유연하게 응대해야 합니다.",
-      "第一に、非定型の状況や、これまで人が必要だった状況（店舗に出向く管理者、遠隔で見守るオペレーター）を、ロボットだけで可能な範囲まで処理する必要があります。第二に、有人店舗のように柔軟に対応する必要があります。"),
-    L("The scope then grew to delivery and cleaning inside the company building. Every project below was added or improved for these needs. They are layers of one system, not separate projects.",
-      "그 뒤 회사 건물 안의 배송과 청소까지 범위를 넓혔습니다. 아래의 모든 프로젝트는 이 필요에 따라 더해지고 개선된 것입니다. 서로 다른 프로젝트가 아니라 한 시스템의 계층입니다.",
-      "その後、社屋内の配送と清掃まで範囲を広げました。以下のすべてのプロジェクトは、この必要に応じて追加・改善したものです。別々のプロジェクトではなく、ひとつのシステムの階層です。"),
+      "목적은 매장을 가능한 한 사람 없이 운영하는 것입니다. 이 목적에서 두 가지 조건이 나왔습니다.",
+      "目的は、店舗をできる限り人手をかけずに運営することです。この目的から2つの条件が生まれました。"),
+    L("First, anomalies, and situations that used to need a person (a manager sent to the store, or an operator watching remotely), have to be handled by the robot as far as a robot can. Second, the store has to respond as flexibly as a staffed store.",
+      "첫째, 이상 상황과 사람이 필요하던 상황(매장에 출동하던 관리자, 원격으로 지켜보던 운영 인력)을 로봇이 처리할 수 있는 데까지는 로봇이 처리해야 합니다. 둘째, 유인 매장처럼 유연하게 응대해야 합니다.",
+      "第一に、異常や、これまで人が必要だった状況（店舗に出向く管理者、遠隔で見守るオペレーター）を、ロボットが処理できる範囲まではロボットが処理する必要があります。第二に、有人店舗のように柔軟に対応する必要があります。"),
+    L("The scope then grew to delivery and cleaning inside the company building. Every project here was added or improved for these needs. They are layers of one system, not separate projects.",
+      "그 뒤 회사 건물 안의 배송과 청소까지 범위를 넓혔습니다. 여기의 모든 프로젝트는 이 필요 때문에 추가하고 개선한 것입니다. 서로 다른 프로젝트가 아니라 한 시스템의 계층입니다.",
+      "その後、社屋内の配送と清掃まで範囲を広げました。ここにあるすべてのプロジェクトは、この必要に応じて追加・改善したものです。別々のプロジェクトではなく、ひとつのシステムの階層です。"),
 ]
 
 # ---------------------------------------------------------------- system map
@@ -46,7 +46,7 @@ SYSTEM_INTRO = L(
     "각 계층은 그 계층을 설명하는 페이지로 이어집니다.",
     "各階層から、その階層を説明するページに移動できます。",
 )
-SYSTEM_HEAD = ["Layer", "Role", "Status", L("Explained in", "설명 페이지", "説明ページ")]
+SYSTEM_HEAD = [L("Layer", "계층", "階層"), L("Role", "역할", "役割"), L("Status", "상태", "状態"), L("Explained in", "설명 페이지", "説明ページ")]
 # (layer, role, status keys, [(page slug, label)])
 SYSTEM_MAP = [
     ("Orchestrator Agent",
@@ -61,13 +61,14 @@ SYSTEM_MAP = [
      L("skill, manipulation policy", "skill, manipulation policy", "skill、manipulation policy"),
      ["op", "test"], [("manipulation-learning", "Project 3")]),
     ("Perception",
-     L("depth · detection · tracking, VLM anomaly detection",
-       "depth · detection · tracking, VLM anomaly detection",
-       "depth · detection · tracking、VLM anomaly detection"),
-     ["op"], [("perception-runtime", "Project 1-1"), ("anomaly-detection", "Project 1-2")]),
+     "depth · detection · tracking",
+     ["op_stores"], [("perception-runtime", "Project 1-1")]),
+    ("Perception",
+     "VLM anomaly detection",
+     ["op_direct"], [("anomaly-detection", "Project 1-2")]),
     ("Cross-cutting: Data · Evaluation · Deployment",
      L("MLOps, evaluation, OTA", "MLOps, 평가, OTA", "MLOps、評価、OTA"),
-     ["op", "sim_eval"], [("deployment", "Project 1-3")]),
+     ["op", "sim_eval"], [("deployment", "Project 1-3"), ("agent-system", "Project 2")]),
 ]
 
 PROJECTS_TITLE = L("Projects", "Projects", "Projects")
@@ -93,21 +94,21 @@ CONNECTIONS = [
      L("When a cup disappears from the shelf, customer pickup and robot removal are told apart.",
        "선반에서 컵이 사라졌을 때 고객 수령과 로봇 회수를 구분합니다.",
        "棚からカップが消えたとき、お客様の受け取りとロボットによる回収を区別します。"),
-     ["op"]),
+     ["op_stores"]),
     (L("Ceiling-camera position + learned single-arm policy",
        "천장 camera의 위치 + 학습한 single-arm policy",
-       "天井cameraの位置 + 学習したsingle-arm policy"),
+       "天井cameraの位置 + 学習済みのsingle-arm policy"),
      L("The arm approaches by position, and the policy does only the grasp of trash that has no fixed shape.",
        "로봇팔은 위치로 접근하고, 모양이 정해지지 않은 쓰레기를 집는 동작만 policy가 맡습니다.",
        "ロボットアームは位置で接近し、形の決まっていないゴミを把持する動作だけをpolicyが担当します。"),
-     ["op"]),
+     ["op_direct"]),
     (L("Store data + MLOps pipeline",
        "매장 데이터 + MLOps pipeline",
        "店舗データ + MLOps pipeline"),
      L("The stereo, detection, and VLM models are updated from the stores' own data, and a new model is deployed only after it passes on the target store and on all stores.",
        "stereo, detection, VLM 모델을 매장의 데이터로 갱신합니다. 새 모델은 해당 매장과 전체 매장에서 모두 통과해야 배포됩니다.",
        "stereo、detection、VLMのモデルを店舗自身のデータで更新します。新しいモデルは、対象店舗と全店舗の両方で通過した場合のみデプロイされます。"),
-     ["op"]),
+     ["op_stores"]),
     (L("VLM anomaly detection + Orchestrator Agent",
        "VLM anomaly detection + Orchestrator Agent",
        "VLM anomaly detection + Orchestrator Agent"),
@@ -127,7 +128,7 @@ CONNECTIONS = [
        "Task Planning Agent + manipulation policyとVLA"),
      L("The planner calls a learned policy with an instruction text and an image in which everything except the target is masked.",
        "planner가 대상 외 영역을 가린 image와 지시문으로 학습한 policy를 호출합니다.",
-       "plannerが、対象以外の領域を隠したimageと指示文で、学習したpolicyを呼び出します。"),
+       "plannerが、対象以外の領域を隠したimageと指示文で、学習済みのpolicyを呼び出します。"),
      ["test"]),
     (L("VLM anomaly detection + Task Planning Agent",
        "VLM anomaly detection + Task Planning Agent",
@@ -149,7 +150,7 @@ EXPERIENCE = [
         "lines": [
             L("A robot service company that operates unmanned robot cafés, where robots make and serve drinks, in 40+ stores.",
               "로봇이 음료를 만들어 제공하는 무인 로봇카페를 40여 개 매장에서 운영하는 로봇 서비스 기업",
-              "ロボットがドリンクを作って提供する無人ロボットカフェを、40以上の店舗で運営するロボットサービス企業"),
+              "ロボットがドリンクを作って提供する無人ロボットカフェを、40店舗以上で運営するロボットサービス企業"),
             L("5-person team. Sole developer of the perception runtime and the deployment system. Project Lead of the agent system: design, task planning, Plan Validator, and Context Manager (MCP connection, robot integration, and evaluation were shared work). For manipulation: teleoperation code and policy training. The navigation system is outside my scope.",
               "5인 팀. perception runtime과 배포 체계는 단독 개발. agent 시스템은 Project Lead로 설계와 task planning, Plan Validator, Context Manager 개발(MCP 연결, 로봇 연동, 평가는 공동). manipulation은 teleoperation code와 policy 학습. 주행 시스템은 담당 밖.",
               "5人チーム。perception runtimeとデプロイの仕組みは単独で開発しました。agentシステムはProject Leadとして、設計とtask planning、Plan Validator、Context Managerを開発しました（MCP接続、ロボット連携、評価は共同）。manipulationではteleoperationのcodeとpolicyの学習を担当しました。走行システムは担当外です。"),
@@ -161,7 +162,7 @@ EXPERIENCE = [
     {
         "org": "POSTECH Artificial Intelligence Institute",
         "role": "Intern Researcher",
-        "period": "2023.05 – 2023.06",
+        "period": L("2023.05 – 2023.06", "2023.05 - 2023.06", "2023.05 - 2023.06"),
         "lines": [
             L("Took part in building an experiment framework that compares combinations of preprocessing (blur, binarization, morphology, denoising) for footprint and tire-mark images.",
               "족적과 타이어 흔적 image의 전처리 조합(blur, binarization, morphology, denoising)을 비교하는 실험 framework 구축에 참여.",
@@ -201,5 +202,5 @@ CONTACT_TITLE = "Contact"
 CONTACT_INTRO = L(
     "Email is the fastest way to reach me.",
     "이메일로 연락 주시면 가장 빠릅니다.",
-    "メールでのご連絡が最も早いです。",
+    "メールでご連絡いただくと最も早く返信できます。",
 )
